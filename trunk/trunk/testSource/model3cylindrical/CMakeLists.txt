@@ -1,0 +1,7 @@
+ADD_EXECUTABLE (model3cylindrical ${PROJECT_SOURCE_DIR}/testSource/model3cylindrical/main.cpp)
+IF (USE_BULLET)
+	TARGET_LINK_LIBRARIES(model3cylindrical ${BULLET_LIBRARIES} OMD)
+ELSE (USE_BULLET)
+	TARGET_LINK_LIBRARIES(model3cylindrical OMD)
+ENDIF (USE_BULLET)
+

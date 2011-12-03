@@ -1,0 +1,5 @@
+// the configured options and settings for Tutorial
+#define OMD_VERSION_MAJOR @OMD_VERSION_MAJOR@
+#define OMD_VERSION_MINOR @OMD_VERSION_MINOR@
+#cmakedefine USE_BULLET
+#cmakedefine USE_OGRE

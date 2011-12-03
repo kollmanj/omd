@@ -1,0 +1,7 @@
+ADD_EXECUTABLE (model2pendulum3 ${PROJECT_SOURCE_DIR}/testSource/model2pendulum3/main.cpp)
+IF (USE_BULLET)
+   TARGET_LINK_LIBRARIES(model2pendulum3 ${BULLET_LIBRARIES} OMD)
+ELSE (USE_BULLET)
+   TARGET_LINK_LIBRARIES(model2pendulum3 OMD)
+ENDIF (USE_BULLET)
+

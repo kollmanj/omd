@@ -1,0 +1,7 @@
+ADD_EXECUTABLE (model3universal ${PROJECT_SOURCE_DIR}/testSource/model3universal/main.cpp)
+IF (USE_BULLET)
+   TARGET_LINK_LIBRARIES(model3universal ${BULLET_LIBRARIES} OMD)
+ELSE (USE_BULLET)
+   TARGET_LINK_LIBRARIES(model3universal OMD)
+ENDIF (USE_BULLET)
+
