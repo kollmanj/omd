@@ -8,21 +8,12 @@ This page documents how to build OMD
 Opensource Multibody Dynamics (OMD) is written in C++ and uses cmake so you can use your favorite IDE.
 
 = Details =
-
-  # Use SVN to check out the code.  If you use Windows, you will probably want this:
-
-http://tortoisesvn.net/downloads.html
-
-The command to check out the code base:
-svn checkout https://omd.googlecode.com/svn/trunk/ omd 
-
-#Get Eigen.  
-http://eigen.tuxfamily.org/index.php?title=Main_Page
+  # Use SVN to check out the code. <br /> If you use Windows, you will probably want this: <br /> http://tortoisesvn.net/downloads.html <br /> The command to check out the code base: svn checkout https://omd.googlecode.com/svn/trunk/ omd <br />
+  # Get Eigen.  <br />  http://eigen.tuxfamily.org/index.php?title=Main_Page
 
 OMD uses the Eigen math library.  To build, OMD has to be able to find Eigen.
 
-3.  Get CMake
-http://eigen.tuxfamily.org/index.php?title=Main_Page
+3.  Get CMake <br /> http://eigen.tuxfamily.org/index.php?title=Main_Page
 
 4.  Get Bullet Collision and Math Library (Optional)
 http://code.google.com/p/bullet/downloads/list
