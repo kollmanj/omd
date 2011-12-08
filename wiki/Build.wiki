@@ -16,7 +16,7 @@ http://tortoisesvn.net/downloads.html
 The command to check out the code base:
 svn checkout https://omd.googlecode.com/svn/trunk/ omd 
 
-  #  Get Eigen.  
+  Get Eigen.  
 http://eigen.tuxfamily.org/index.php?title=Main_Page
 
 OMD uses the Eigen math library.  To build, OMD has to be able to find Eigen.
