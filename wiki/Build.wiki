@@ -23,3 +23,13 @@ OMD uses the Eigen math library.  To build, OMD has to be able to find Eigen.
 
 3.  Get CMake
 http://eigen.tuxfamily.org/index.php?title=Main_Page
+
+4.  Get Bullet Collision and Math Library (Optional)
+http://code.google.com/p/bullet/downloads/list
+
+OMD uses the collision library from bullet.
+You may be interested in Bullet instead of OMD.  Bullet is geared towards video games and the like.
+
+5.  Get swig (Optional)
+http://www.swig.org/
+swig is used to make OMD available within python
