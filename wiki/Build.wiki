@@ -12,5 +12,4 @@ Opensource Multibody Dynamics (OMD) is written in C++ and uses cmake so you can 
   # Get Eigen.  <br />  http://eigen.tuxfamily.org <br />  OMD uses the Eigen math library.  To build, OMD has to be able to find Eigen.<br />
   #  Get CMake <br /> http://www.cmake.org/ <br />
   #  Get Bullet Collision and Math Library (Optional)<br /> http://code.google.com/p/bullet/downloads/list <br />  OMD uses the collision library from bullet to do contact.  <br />  You may be interested in Bullet instead of OMD.  Bullet is geared towards video games and the like. <br />
-  #  Get swig (Optional) <br />  http://www.swig.org/
-swig is used to make OMD available within python
+  #  Get swig (Optional) <br />  http://www.swig.org/ <br /> swig is used to make OMD available within python
