@@ -174,7 +174,8 @@ public Model
         void integrate( double t0, double t1, bool storeBodyAccels=false);
         IntegratorRK4 * setIntegratorRK4();
         IntegratorEuler * setIntegratorEuler();
-       ForceContact * addForceContact ( string const& name, double stiff, double damp, double frict, double thresh);
+        ForceContact * addForceContact ( string const& name, double stiff, double damp, double frict, double thresh);
+        BodyRigid *getBody( std::string bodyname );
 };
 
 class JointTranslational : 

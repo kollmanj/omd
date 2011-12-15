@@ -167,6 +167,15 @@ namespace OMD
 		///
 		ForceGravity * addForceGravity(std::string const &name, double g=9.81, Vect3 const &direction=Vect3(0,0,-1));
 		///
+		/// add a Force which applies the defined magnitude and direction of gravity to all bodies in the model
+		///
+		/// @param[in] name : name of the force
+		/// @param[in] direction: vector of gravity
+		///
+		/// @return pointer to ForceGravity
+		///
+		ForceGravity * addForceGravity(std::string const &name, Vect3 const &v=Vect3(0,0,-9.81));
+		///
 		/// add a Force which representing a spring damper to connecting 2 bodies
 		///
 		/// @param[in] name : name of the force
@@ -208,8 +217,8 @@ namespace OMD
 			double k,
 			double c,
 			double fl,
-			vector<double> body1Offset,
-			vector<double> body2Offset);
+			std::vector<double> body1Offset,
+			std::vector<double> body2Offset);
 
 
 		#ifdef USE_BULLET

@@ -461,4 +461,80 @@ namespace OMD
 		t->push_back(posf(4));
 		t->push_back(posf(5));
 	}
+
+	void ForceContact::addTire(double radius, double width, Vect3 offset, Mat3x3 rot, BodyRigid *body,  OMD::Curve2DLinInterp slipCurve)
+	{
+		btCylinderShape *cylinder = new btCylinderShape(btVector3(radius,width/2,radius));
+		cylinder->setMargin(0.001);
+		Quat qq(rot);
+		addShape(cylinder,offset,qq,body);
+      //mTireBodySlipCurveMap.insert(pair<Body *, Curve2DLinInterp> (body,slipCurve));
+      mTireBodySlipCurveMap[body] = slipCurve;
+
+		return;
+		//mTireBodies.push_back(body);
+	}
+
+	void ForceContact::addShape(btCollisionShape* shape, Vect3 offset, Quat const & qt, Body * body)
+	{
+		// check to see if we already have a btCompoundShape to which we can add the shape
+		btCollisionObjectArray &objectArray = m_btCollisionWorld->getCollisionObjectArray();
+		btCompoundShape *cShape(0);
+		// loop through and position collision objects in the collision world
+		for (int i=0; i < objectArray.size(); i++)
+		{
+			btCollisionObject *object = objectArray[i];
+			Body * b = static_cast<Body *>(object->getUserPointer());
+			if (body == b)
+			{
+				cShape = dynamic_cast<btCompoundShape*>(object->getCollisionShape());
+		      //btMatrix3x3 btrot(rot[0][0],rot[0][1],rot[0][2],rot[1][0],rot[1][1],rot[1][2],rot[2][0],rot[2][1],rot[2][2]);
+		      btQuaternion btquat(qt.x(),qt.y(),qt.z(),qt.w());
+		      //btrot.getRotation(btquat);
+
+		      btTransform shapeTrans(btquat,btVector3(offset.x(),offset.y(),offset.z()));
+		      cShape->addChildShape(shapeTrans,shape);
+				break;
+			}
+		}
+		// if we didn't find a shape already associated with a body make one
+		if (!cShape)
+		{
+			cShape = new btCompoundShape();
+
+		//btMatrix3x3 btrot(rot[0][0],rot[0][1],rot[0][2],rot[1][0],rot[1][1],rot[1][2],rot[2][0],rot[2][1],rot[2][2]);
+		//btQuaternion btquat;
+		//btrot.getRotation(btquat);
+		btQuaternion btquat(qt.x(),qt.y(),qt.z(),qt.w());
+
+		btTransform shapeTrans(btquat,btVector3(offset.x(),offset.y(),offset.z()));
+		cShape->addChildShape(shapeTrans,shape);
+		cShape->setMargin(0.001);
+		//btDefaultMotionState* MotionState = new btDefaultMotionState();  ////////////////////////////////////////////////////////
+		
+		btCollisionObject *collisionObject = new btCollisionObject();
+		collisionObject->setCollisionShape(cShape);
+		//btRigidBody *btBody(0);
+		if (body)
+		{
+			//btBody = new btRigidBody(1,MotionState,cShape,btVector3(0,0,0));
+			//btBody->setUserPointer(body);
+			collisionObject->setUserPointer(body);
+		}
+		else
+		{
+			// Not associated with a body set it's pointer to 0
+			//btBody = new btRigidBody(0,MotionState,cShape,btVector3(0,0,0));
+			collisionObject->setUserPointer(0);
+			// No rotation positioned at 0,0,0 
+			//btTransform collisionTransform(btQuaternion(0,0,0,1),btVector3(0,0,0));
+			//collisionObject->setWorldTransform(collisionTransform);
+			btTransform collisionTransform(btQuaternion(0,0,0,1),btVector3(0,0,0));
+			collisionObject->setWorldTransform(collisionTransform);
+		}
+		m_btCollisionWorld->addCollisionObject(collisionObject);
+		//m_btDDynamicsWorld->addRigidBody(btBody);
+      }
+      return;
+	}
 }

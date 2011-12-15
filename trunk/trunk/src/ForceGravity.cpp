@@ -6,6 +6,12 @@ ForceGravity::ForceGravity(std::string const &name, double g, Vect3 const &direc
 {
 }
 
+ForceGravity::ForceGravity(std::string const &name, Vect3 const &v ): Force(name)
+{
+	m_g = v.norm();
+	m_direction = v.normalized();
+}
+
 ForceGravity::ForceGravity(std::string const &name, double g, vector<double> const &direction): m_g(g), Force(name)
 {
 	m_direction << direction[0], direction[1], direction[2];
