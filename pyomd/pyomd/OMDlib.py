@@ -375,6 +375,7 @@ class Model1(_object):
     def setIntegratorRK4(self): return _OMDlib.Model1_setIntegratorRK4(self)
     def setIntegratorEuler(self): return _OMDlib.Model1_setIntegratorEuler(self)
     def addForceContact(self, *args): return _OMDlib.Model1_addForceContact(self, *args)
+    def getBody(self, *args): return _OMDlib.Model1_getBody(self, *args)
 Model1_swigregister = _OMDlib.Model1_swigregister
 Model1_swigregister(Model1)
 

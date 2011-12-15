@@ -157,6 +157,22 @@ namespace OMD
 		}
 	}
 
+	ForceGravity * Model1::addForceGravity(std::string const &name, Vect3 const &v)
+	{
+		bool nameAlreadyUsed = searchForcesForName(name);
+		if (nameAlreadyUsed)  /// TODO: do something more informative for the user then pass back NULL
+		{
+			return NULL;
+		}
+		else
+		{
+			ForceGravity *force = new ForceGravity(name, v);
+			force->addRigidBodies(m_rigidBodies);
+			m_forces.push_back(force);	// add force to the vector of forces
+			return force;
+		}
+	}
+
 	Force2BodySpringDamp * Model1::addForce2BodySpringDamp ( string const& name,
 			BodyRigid *body1,
 			BodyRigid *body2,
