@@ -58,6 +58,10 @@ namespace OMD
 		~Force2BodySpringDamp(void);
 
 		virtual void apply(double t);
+		void setBody1Offset(Vect3 off){m_body1Offset=off;};
+		void setBody2Offset(Vect3 off){m_body2Offset=off;};
+		Vect3 getBody1Offset(){return m_body1Offset;};
+		Vect3 getBody2Offset(){return m_body2Offset;};
 
 		double m_k;
 		double m_c;
