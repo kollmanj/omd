@@ -16,7 +16,7 @@ SET(BULLET_ROOT "/usr/local")
 
 OPTION(USE_BULLET "Build against the bullet engine" OFF)
 OPTION(SWIG_BUILD "Use Python Swig to build python libs" OFF)
-#OPTION(USE_OGRE "Build against the Ogre engine" OFF)
+OPTION(USE_OGRE "Build against the Ogre engine" OFF)
 OPTION(BUILD_TESTS "Build the Executables for Testing" ON)
 #OPTION(DEBUG_BUILD "Build Debug" OFF)
 #IF (DEBUG_BUILD)
@@ -142,11 +142,11 @@ ENDIF (USE_BULLET)
 IF (USE_OGRE)
    SET (OMD_SRCS
          ${OMD_SRCS}
-         ${PROJECT_SOURCE_DIR}/src/OMDForceCollisionDynWorld.cpp
+         ${PROJECT_SOURCE_DIR}/src/ForceCollisionDynWorld.cpp
       )
    SET (OMD_HDRS
          ${OMD_HDRS}
-         ${PROJECT_SOURCE_DIR}/include/OMDForceCollisionDynWorld.h
+         ${PROJECT_SOURCE_DIR}/include/ForceCollisionDynWorld.h
       )
 ENDIF (USE_OGRE)
 
