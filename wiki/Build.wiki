@@ -15,3 +15,4 @@ Opensource Multibody Dynamics (OMD) is written in C++ and uses cmake so you can 
   #  Get swig (Optional) <br />  http://www.swig.org/ <br /> swig is used to make OMD available within python <br />
   # Run CMake, below is an example:
 https://omd.googlecode.com/svn/cmakepict.png
+CMake should be used to setup your favorite IDE, and that is it!
