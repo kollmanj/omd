@@ -5,6 +5,7 @@
 #include "BodyRigid.h"
 #include "Force1Body.h"
 #include "ForceGravity.h"
+#include "ForceBuoyancy.h"
 #include "IntegratorRK4.h"
 #include "IntegratorEuler.h"
 #include <vector>
@@ -129,6 +130,19 @@ namespace OMD
 		///
 		Force1Body * addForceOnBody(std::string const &name, BodyRigid * body, std::vector<double> const &f, std::vector<double> const &forceLocation, bool const &forceLocal=true);
 		///
+		/// add a Force of type ForceBuoyancy to the model without Eigen, for use with swig
+		/// This is really just a 1 body force or forceOnBody.  This is a placeholder:  TODO:  change code to do buoyancy
+		/// 
+		/// @param[in] name : name of the force
+		/// @param[in] *body : pointer to the body on which to apply the force or torque
+		/// @param[in] f : force vector which defines the force applied to the body
+		/// @param[in] forceLocation : location in body coordinates at which to apply the force
+		/// @param[in] forceLocal: true of the vector f is in local body coordinates, false indicates f is in global coordinates
+		/// 
+		/// @return pointer force of type Force1Body added to the model
+		///
+		ForceBuoyancy * addForceBuoyancy(std::string const &name, BodyRigid * body, std::vector<double> const &f, std::vector<double> const &forceLocation, bool const &forceLocal=true);
+		///
 		/// add a Force of type Force1Body to the model
 		/// 
 		/// @param[in] name : name of the force
@@ -142,6 +156,23 @@ namespace OMD
 		/// @return pointer force of type Force1Body added to the model
 		///
 		Force1Body * addForce1Body(std::string const &name, BodyRigid * body, Vect3 const &f, Vect3 const &forceLocation=Vect3(0,0,0),
+			bool const &forceLocal=true, Vect3 const &t=Vect3(0,0,0), bool const &torqueLocal=true);
+
+		///
+		/// add a Force of type Buoyancy to the model
+		/// This is really just a 1 body force or forceOnBody.  This is a placeholder:  TODO:  change code to do buoyancy
+		/// 
+		/// @param[in] name : name of the force
+		/// @param[in] *body : pointer to the body on which to apply the force or torque
+		/// @param[in] f : force vector which defines the force applied to the body
+		/// @param[in] forceLocation : location in body coordinates at which to apply the force
+		/// @param[in] forceLocal: true of the vector f is in local body coordinates, false indicates f is in global coordinates
+		/// @param[in] t: torque vector which defines th torque applied to the body
+		/// @param[in] torqueLocal: true if the torque, t, is to be applied in the local body coordinates, false indicates t is in global coordinates
+		/// 
+		/// @return pointer force of type Force1Body added to the model
+		///
+		ForceBuoyancy * addForceBuoyancy(std::string const &name, BodyRigid * body, Vect3 const &f, Vect3 const &forceLocation=Vect3(0,0,0),
 			bool const &forceLocal=true, Vect3 const &t=Vect3(0,0,0), bool const &torqueLocal=true);
 
 

@@ -41,6 +41,7 @@ SET (OMD_SRCS
 	${PROJECT_SOURCE_DIR}/src/Force1Body.cpp
 	${PROJECT_SOURCE_DIR}/src/Force2BodySpringDamp.cpp
 	${PROJECT_SOURCE_DIR}/src/ForceGravity.cpp
+	${PROJECT_SOURCE_DIR}/src/ForceBuoyancy.cpp
 	${PROJECT_SOURCE_DIR}/src/ForceRevJnt.cpp
 	${PROJECT_SOURCE_DIR}/src/ForceRevJntPIDCurve2D.cpp
 	${PROJECT_SOURCE_DIR}/src/ForceRevJntSpringDamp.cpp
@@ -75,6 +76,7 @@ SET (OMD_HDRS
 	${PROJECT_SOURCE_DIR}/include/Force1Body.h
 	${PROJECT_SOURCE_DIR}/include/Force2BodySpringDamp.h
 	${PROJECT_SOURCE_DIR}/include/ForceGravity.h
+	${PROJECT_SOURCE_DIR}/include/ForceBuoyancy.h
 	${PROJECT_SOURCE_DIR}/include/ForceRevJnt.h
 	${PROJECT_SOURCE_DIR}/include/ForceRevJntPIDCurve2D.h
 	${PROJECT_SOURCE_DIR}/include/ForceRevJntSpringDamp.h

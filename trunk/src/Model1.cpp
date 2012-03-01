@@ -104,6 +104,13 @@ namespace OMD
 		return addForce1Body(name,body,f_,l_,forceLocal);
 	}
 
+	ForceBuoyancy * Model1::addForceBuoyancy(std::string const &name, BodyRigid * body, std::vector<double> const &f, std::vector<double> const &forceLocation, bool const &forceLocal)
+	{
+		Vect3 f_(f[0],f[1],f[2]);
+		Vect3 l_(forceLocation[0], forceLocation[1], forceLocation[2]);
+		return addForceBuoyancy(name,body,f_,l_,forceLocal);
+	}
+
 	Force1Body * Model1::addForce1Body(std::string const &name, BodyRigid * body, Vect3 const &f, Vect3 const &forceLocation,
 		bool const &forceLocal, Vect3 const &t, bool const &torqueLocal)
 	{
@@ -115,6 +122,22 @@ namespace OMD
 		else
 		{
 			Force1Body *force = new Force1Body(name, body, f, forceLocation, forceLocal, t, torqueLocal);
+			m_forces.push_back(force);	// add force to the vector of forces
+			return force;
+		}
+	}
+
+	ForceBuoyancy * Model1::addForceBuoyancy(std::string const &name, BodyRigid * body, Vect3 const &f, Vect3 const &forceLocation,
+		bool const &forceLocal, Vect3 const &t, bool const &torqueLocal)
+	{
+		bool nameAlreadyUsed = searchForcesForName(name);
+		if (nameAlreadyUsed)  /// TODO: do something more informative for the user then pass back NULL
+		{
+			return NULL;
+		}
+		else
+		{
+			ForceBuoyancy *force = new ForceBuoyancy(name, body, f, forceLocation, forceLocal, t, torqueLocal);
 			m_forces.push_back(force);	// add force to the vector of forces
 			return force;
 		}
