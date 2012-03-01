@@ -29,6 +29,7 @@
 #include "ForceTransJntSpringDamp.h"
 #include "ForceRevJntPIDCurve2D.h"
 #include "ForceGravity.h"
+#include "ForceBuoyancy.h"
 #include "Force2BodySpringDamp.h"
 #include "Tree.h"
 #include "Integrator.h"
@@ -118,6 +119,20 @@ public Force
         void setForce(double x, double y, double z);
 };
 
+class ForceBuoyancy:
+public Force
+{
+        public:
+        ForceBuoyancy(std::string const &name, BodyRigid * body, 
+                        vector<double> const &f,
+                        vector<double> const &forceLocation,
+                        bool const &forceIsLocal, 
+                        vector<double> const &t, 
+                        bool const &torqueIsLocal=true); 
+        void setTorque(double x, double y, double z);
+        void setForce(double x, double y, double z);
+};
+
 class ForceGravity:
 public Force
 {
@@ -164,6 +179,7 @@ public Model
         std::vector<double> getState();
         BodyRigid* addBodyRigid(std::string const &name, double const &mass, std::vector<double> const &inertia, std::vector<double> const &pos, std::vector<double> q, std::vector<double> const &vel, std::vector<double> const &wl, bool const &fixed=false);
         Force1Body * Model1::addForceOnBody(std::string const &name, BodyRigid * body, std::vector<double> const &f, std::vector<double> const &forceLocation, bool const &forceLocal=true);
+        ForceBuoyancy * Model1::addForceBuoyancy(std::string const &name, BodyRigid * body, std::vector<double> const &f, std::vector<double> const &forceLocation, bool const &forceLocal=true);
         Force1Body * Model1::addTorqueOnBody(std::string const &name, BodyRigid * body, std::vector<double> const &t, bool const &torqueLocal=true);
         JointRevolute* Model2::addJointRevolute(std::string const& name, std::string parentname, std::vector<double> parent2joint, std::string childname, std::vector<double> joint2child, std::vector<double> axis, double q0 = 0, double u0 =0);
         Force2BodySpringDamp * Model1::addForce2BodySpringDamp ( std::string const& name, BodyRigid *body1, BodyRigid *body2, double k, double c, double fl, std::vector<double> body1Offset, std::vector<double> body2Offset);
