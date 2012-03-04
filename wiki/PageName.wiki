@@ -35,6 +35,20 @@ public Force
 };    
 </code> 
 
+We need to expose on other method in python.  A force is instantiated through the model.  If possible it is best to add the force to model1 and let model2 and model3 inherit from model1 (because they are derived).  So here is the method in model1 that allows the creation of the buoyancy force:
+
+<code language="c++">
+class Model1 :
+public Model
+{
+        public:
+        Model1(void);
+        ...
+        ForceBuoyancy * Model1::addForceBuoyancy(std::string const &name, BodyRigid * body, std::vector<double> const &f, std::vector<double> const &forceLocation, bool const &forceLocal=true);
+...
+};
+</code> 
+
 Once those changes are made, use CMake to create the required files for your IDE (see other wiki article) and then build it in your IDE.  After the build here are the files you will need:
   # OMDlib.py
   # \_ OMDlib.pyd 
