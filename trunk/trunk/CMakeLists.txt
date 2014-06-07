@@ -24,7 +24,8 @@ OPTION(BUILD_TESTS "Build the Executables for Testing" ON)
 #ENDIF (DEBUG_BUILD)
 
 # alway need eigen
-SET(EIGEN_ROOT "C:/Users/john/Documents/eigen-eigen-3.0.1" CACHE TYPE STRING)
+#SET(EIGEN_ROOT "C:/Users/john/Documents/eigen-eigen-3.0.1" CACHE TYPE STRING)
+SET(EIGEN_ROOT "C:/Users/kollmaj/Documents/eigen4" CACHE TYPE STRING)
 INCLUDE_DIRECTORIES(${EIGEN_ROOT})
 
 
@@ -111,7 +112,9 @@ if ( USE_BULLET )
          add_definitions(-DHAVE_BULLET)
          INCLUDE_DIRECTORIES(${BULLET_INCLUDE_DIRS})
       else()
-         MESSAGE(FATAL_ERROR, "Bullet Not found.")
+	 SET(BULLET_INCLUDE_DIRS "C:/Users/kollmaj/bullet/trunk/src")
+         INCLUDE_DIRECTORIES(${BULLET_INCLUDE_DIRS})
+	 #MESSAGE(FATAL_ERROR, "Bullet Not found.")
       endif()
    # no ogre so don't need dynamics which contains debug visualization
    else(USE_OGRE)  
@@ -120,7 +123,9 @@ if ( USE_BULLET )
          add_definitions(-DHAVE_BULLET)
          INCLUDE_DIRECTORIES(${BULLET_INCLUDE_DIRS})
       else()
-         MESSAGE(FATAL_ERROR, "Bullet Not found.")
+	 SET(BULLET_INCLUDE_DIRS "C:/Users/kollmaj/bullet/trunk")
+         INCLUDE_DIRECTORIES(${BULLET_INCLUDE_DIRS})
+	 #MESSAGE(FATAL_ERROR, "Bullet Not found.")
       endif()
    endif(USE_OGRE)
 

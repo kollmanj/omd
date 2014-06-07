@@ -49,7 +49,7 @@ void ForceGravity::addRigidBodies(std::vector<BodyRigid *> rigidBodies)
 			bool thereAlready = false;
 			for (std::vector<BodyRigid *>::iterator itb2=m_rigidBodies.begin(); itb2 < m_rigidBodies.end(); itb2++)
 			{
-				if (itb == itb2)
+				if (*itb == *itb2)
 				{
 					thereAlready = true;
 					break;

@@ -1,5 +1,5 @@
 #ifndef SWIG	// don't include in SWIG
-#include "OMDForceCollisionDynWorld.h"
+#include "ForceCollisionDynWorld.h"
 //#include "OMDMatrix3.h"
 
 #include <iostream>
@@ -462,7 +462,7 @@ namespace OMD
 	{
 		Quat OMDq(rot);
 		// check to see if we already have a btCompoundShape to which we can add the shape
-		btCollisionObjectArray &objectArray = m_btDDynamicsWorld->getCollisionObjectArray();
+/*		btCollisionObjectArray &objectArray = m_btDDynamicsWorld->getCollisionObjectArray();
 		btCompoundShape *cShape(0);
 		// loop through and position collision objects in the collision world
 		for (int i=0; i < objectArray.size(); i++)
@@ -471,6 +471,7 @@ namespace OMD
 			BodyRigid * b = static_cast<BodyRigid *>(object->getUserPointer());
 			if (body == b)
 			{
+				//btCollisionShape * ctest = object->getCollisionShape();
 				cShape = dynamic_cast<btCompoundShape*>(object->getCollisionShape());
 		      //btMatrix3x3 btrot(rot[0][0],rot[0][1],rot[0][2],rot[1][0],rot[1][1],rot[1][2],rot[2][0],rot[2][1],rot[2][2]);
 		      btQuaternion btquat(OMDq.x(),OMDq.y(),OMDq.z(),OMDq.w());
@@ -483,8 +484,8 @@ namespace OMD
 		}
 		// if we didn't find a shape already associated with a body make one
 		if (!cShape)
-		{
-			cShape = new btCompoundShape();
+		{*/
+			btCompoundShape * cShape = new btCompoundShape();
 
 		//btMatrix3x3 btrot(rot[0][0],rot[0][1],rot[0][2],rot[1][0],rot[1][1],rot[1][2],rot[2][0],rot[2][1],rot[2][2]);
 		btQuaternion btquat(OMDq.x(),OMDq.y(),OMDq.z(),OMDq.w());
@@ -514,7 +515,7 @@ namespace OMD
 		}
 		//m_btDDynamicsWorld->addCollisionObject(collisionObject);
 		m_btDDynamicsWorld->addRigidBody(btBody);
-      }
+     // }
       return;
 	}
    void ForceCollisionDynWorld::doTireFrictionForceAndTorque(BodyRigid *b, Vect3 ptLocal,Vect3 ptRelativeVelGlobal,Vect3 normalF, Vect3 &f, Vect3 &t)

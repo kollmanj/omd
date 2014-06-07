@@ -53,6 +53,21 @@ namespace OMD
 
 	}
 
+	Force* Model3::getForce( string forcename )
+	{
+
+		string name;
+		std::vector< Force *>::reverse_iterator rit;
+		for (rit = m_forces.rbegin(); rit < m_forces.rend(); ++rit )
+		{
+			if (forcename == (*rit)->getName())
+			{
+				return (*rit);
+			}
+		}
+		return NULL;
+	}
+
 	std::vector<double> Model3::getState( )
 	{
 		std::vector<double> state;

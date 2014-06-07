@@ -68,6 +68,7 @@ namespace OMD
 		/// Destruct this Model3
 		///
 		~Model3();
+		Force *getForce(  string forcename );
 		void calcIndependentStates();
 
 		MatNxN getConstraintViolation();
