@@ -138,8 +138,10 @@ namespace OMD
 		for (int i=0;i<numManifolds;i++)
 		{
 			btPersistentManifold* contactManifold = m_btCollisionWorld->getDispatcher()->getManifoldByIndexInternal(i);
-			btCollisionObject* obA = static_cast<btCollisionObject*>(contactManifold->getBody0());
-			btCollisionObject* obB = static_cast<btCollisionObject*>(contactManifold->getBody1());
+			//btCollisionObject* obA = static_cast<btCollisionObject*>(contactManifold->getBody0());
+			const btCollisionObject* obA = contactManifold->getBody0();
+			//btCollisionObject* obB = static_cast<btCollisionObject*>(contactManifold->getBody1());
+			const btCollisionObject* obB = contactManifold->getBody1();
 			BodyRigid * bA = static_cast<BodyRigid *>(obA->getUserPointer());
 			BodyRigid * bB = static_cast<BodyRigid *>(obB->getUserPointer());
 			int numContacts = contactManifold->getNumContacts();

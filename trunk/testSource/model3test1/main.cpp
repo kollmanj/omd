@@ -93,7 +93,7 @@ void ball1()
         //std::cout << "Model1 body2 pos: " << p12.x() << " " << p12.y()<< " " << p12.z()  << std::endl;
 
         q31 = body1->m_q;
-		//std::cout << "Model3 body1 Quaternion: " << q31.w() << ", " << q31.x() << ", " << q31.y() << ", " << q31.z() << std::endl;
+		std::cout << "Model3 body1 Quaternion: " << q31.w() << ", " << q31.x() << ", " << q31.y() << ", " << q31.z() << std::endl;
         q11 = body11->m_q;
 		//std::cout << "Model2 body1 Quat: " << q11.w() << ", " << q11.x() << ", " << q11.y() << ", " << q11.z() << std::endl;
 

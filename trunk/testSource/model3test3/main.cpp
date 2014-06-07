@@ -72,7 +72,7 @@ void ball1()
 		//std::cout << "time: " << time << std::endl;
 
 		p23 = body2->m_pos;
-		//std::cout << "Model3 body2 pos: " << p23.x() << ", "<< p23.y() << ", "<< p23.z() << std::endl;
+		std::cout << "Model3 body2 pos: " << p23.x() << ", "<< p23.y() << ", "<< p23.z() << std::endl;
 		p21 = bob1->m_pos;
 		//std::cout << "Model1 body2 pos: " << p21.x() << ", "<< p21.y() << ", "<< p21.z() << std::endl;
 
