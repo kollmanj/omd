@@ -100,6 +100,12 @@ namespace OMD
 
 		m_n_alpha_t_k << 0,0,0;
 		m_n_a_t_k << 0,0,0;
+
+		// contact stuff
+		m_stiff = 0;
+		m_damp = 0;
+		m_frict = 0;
+		m_thresh = 0;
 	}
 
 	BodyRigid::BodyRigid(std::string const &name, double const &mass, Mat3x3 const &inertia, 
@@ -121,11 +127,25 @@ namespace OMD
 
 		m_n_alpha_t_k << 0,0,0;
 		m_n_a_t_k << 0,0,0;
+
+		// contact stuff
+		m_stiff = 0;
+		m_damp = 0;
+		m_frict = 0;
+		m_thresh = 0;
 	}
 
 
 	BodyRigid::~BodyRigid(void)
 	{
+	}
+
+	void BodyRigid::defineContact(double stiff, double damp, double frict, double thresh)
+	{
+		m_stiff = stiff;
+		m_damp = damp;
+		m_frict = frict;
+		m_thresh = thresh;
 	}
 
 	void BodyRigid::forceAccumReset()

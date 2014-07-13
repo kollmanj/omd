@@ -15,6 +15,7 @@
 #include <LinearMath/btAlignedObjectArray.h>
 #include "Curve2DLinInterp.h"
 #include <btBulletDynamicsCommon.h>
+#include <fstream>	// write to file for debugging
 
 namespace OMD
 {
@@ -44,10 +45,11 @@ class ForceCollisionDynWorld :
 			btCollisionDispatcher *mDispatcher;
 			btSequentialImpulseConstraintSolver *mSolver;
 			btDiscreteDynamicsWorld *m_btDDynamicsWorld;
-         std::map<Body *, Curve2DLinInterp> mTireBodySlipCurveMap;
+			std::map<Body *, Curve2DLinInterp> mTireBodySlipCurveMap;
 			//std::vector<Body *> mTireBodies;
 			//btAlignedObjectArray<btCollisionShape*> mCollisionShapes;
 			double mk, md, m_mu, m_thresh;
+			ofstream fout;
 };
 }
 #endif

@@ -143,6 +143,12 @@ public:
 	/// Vector to sum the torque applied in local coordinates
 	Vect3 m_appliedTorque; //local
 
+	void defineContact(double stiff, double damp, double frict, double thresh);
+	// data for contact
+	double m_stiff;
+	double m_damp;
+	double m_frict;
+	double m_thresh;
 
 protected:
 	friend class Joint1DOF;
