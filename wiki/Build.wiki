@@ -20,5 +20,7 @@ CMake should be used to setup your favorite IDE,
 
 In Linux install cmake:
 $sudo apt-get install cmake-curses-gui
+and or ?
+sudo apt-get install cmake-qt-gui
 
 and that is it!
