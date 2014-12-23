@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 2.6)
+cmake_minimum_required(VERSION 2.8)
 
 PROJECT (OMD)
 
@@ -12,7 +12,7 @@ SET(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/CMake)
 include_directories("${PROJECT_SOURCE_DIR}/include")
 
 # just set this here for now TODO make it changeable
-SET(BULLET_ROOT "/usr/local")
+#SET(BULLET_ROOT "/usr/local")
 
 OPTION(USE_BULLET "Build against the bullet engine" OFF)
 OPTION(SWIG_BUILD "Use Python Swig to build python libs" OFF)
@@ -25,7 +25,8 @@ OPTION(BUILD_TESTS "Build the Executables for Testing" ON)
 
 # alway need eigen
 #SET(EIGEN_ROOT "C:/Users/john/Documents/eigen-eigen-3.0.1" CACHE TYPE STRING)
-SET(EIGEN_ROOT "C:/Users/kollmaj/Documents/eigen4" CACHE TYPE STRING)
+#SET(EIGEN_ROOT "C:/Users/kollmaj/Documents/eigen4" CACHE TYPE STRING)
+SET(EIGEN_ROOT "/home/john/eigen/eigen-eigen-1306d75b4a21" CACHE TYPE STRING)
 INCLUDE_DIRECTORIES(${EIGEN_ROOT})
 
 
@@ -106,34 +107,54 @@ SET (OMD_HDRS
 
 # if Bullet find it and stuff
 if ( USE_BULLET )
-   if (USE_OGRE)  # get bullet with dynamics
-      find_package(Bullet)
-      if ( BULLET_FOUND )
-         add_definitions(-DHAVE_BULLET)
-         INCLUDE_DIRECTORIES(${BULLET_INCLUDE_DIRS})
-      else()
-	 SET(BULLET_INCLUDE_DIRS "C:/Users/kollmaj/bullet/trunk/src")
-         INCLUDE_DIRECTORIES(${BULLET_INCLUDE_DIRS})
-	 #MESSAGE(FATAL_ERROR, "Bullet Not found.")
-      endif()
-   # no ogre so don't need dynamics which contains debug visualization
-   else(USE_OGRE)  
-      find_package(BulletNoDynamics)
-      if ( BULLET_FOUND )
-         add_definitions(-DHAVE_BULLET)
-         INCLUDE_DIRECTORIES(${BULLET_INCLUDE_DIRS})
-      else()
-	 SET(BULLET_INCLUDE_DIRS "C:/Users/kollmaj/bullet/trunk")
-         INCLUDE_DIRECTORIES(${BULLET_INCLUDE_DIRS})
-	 #MESSAGE(FATAL_ERROR, "Bullet Not found.")
-      endif()
-   endif(USE_OGRE)
+  SET(BULLET_INCLUDE_DIRS "/usr/include/bullet")
+  set (BULLET_LIBRARIES ${BULLET_LIBRARIES} libLinearMath.a)
+  set (BULLET_LIBRARIES ${BULLET_LIBRARIES} libBulletCollision.a)
 
+  option(<option_variable> "help string describing option" fPIC)
+
+  INCLUDE_DIRECTORIES(${BULLET_INCLUDE_DIRS})
+  #set (BLD ${BLD} "/usr/local/lib")
+
+  link_directories(~/)
+
+  #find_library(BULLET_LIBRARIES NAMES libLinearMath libBulletCollision HINTS ${BLD} )
+
+
+
+#   if (USE_OGRE)  # get bullet with dynamics
+      #find_package(Bullet)
+      #if ( BULLET_FOUND )
+#         add_definitions(-DHAVE_BULLET)
+#         INCLUDE_DIRECTORIES(${BULLET_INCLUDE_DIRS})
+#      else()
+#	 #SET(BULLET_INCLUDE_DIRS "C:/Users/kollmaj/bullet/trunk/src")
+#	 SET(BULLET_INCLUDE_DIRS "/usr/include/bullet")
+#         set (BULLET_LIBRARIES ${BULLET_LIBRARIES} libLinearMath)
+#         set (BULLET_LIBRARIES ${BULLET_LIBRARIES} libBulletCollision)
+#         
+#         INCLUDE_DIRECTORIES(${BULLET_INCLUDE_DIRS})
+#	 #MESSAGE(FATAL_ERROR, "Bullet Not found.")
+#      endif()
+#   # no ogre so don't need dynamics which contains debug visualization
+#   else(USE_OGRE)  
+#      find_package(BulletNoDynamics)
+#      if ( BULLET_FOUND )
+#         add_definitions(-DHAVE_BULLET)
+#         INCLUDE_DIRECTORIES(${BULLET_INCLUDE_DIRS})
+#      else()
+#	 #SET(BULLET_INCLUDE_DIRS "C:/Users/kollmaj/bullet/trunk")
+#         INCLUDE_DIRECTORIES(${BULLET_INCLUDE_DIRS})
+#	 #MESSAGE(FATAL_ERROR, "Bullet Not found.")
+#      endif()
+#   endif(USE_OGRE)
+#
 endif()
 
 # If Bullet is being used then add the source and 
 # header files pertaining to bullet
 IF (USE_BULLET)
+   #target_link_libraries(BULLET_LIBRARIES)
    SET (OMD_SRCS
          ${OMD_SRCS}
          ${PROJECT_SOURCE_DIR}/src/ForceContact.cpp
@@ -174,7 +195,7 @@ IF(SWIG_BUILD)
    FIND_PACKAGE(PythonLibs)
    INCLUDE_DIRECTORIES(${PYTHON_INCLUDE_PATH})
    
-   #INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR})
+   INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR})
    
    SET(CMAKE_SWIG_FLAGS "")
    
@@ -187,7 +208,7 @@ IF(SWIG_BUILD)
      )
 IF (USE_BULLET)
    #SWIG_LINK_LIBRARIES(${PYTHON_LIBRARIES} ${BULLET_LIBRARIES})
-   SWIG_LINK_LIBRARIES(OMDlib ${PYTHON_LIBRARIES} ${BULLET_LIBRARIES})
+   SWIG_LINK_LIBRARIES(OMDlib STATIC ${PYTHON_LIBRARIES} ${BULLET_LIBRARIES})
 ELSE (USE_BULLET)
    #SWIG_LINK_LIBRARIES(${PYTHON_LIBRARIES} )
    SWIG_LINK_LIBRARIES(OMDlib ${PYTHON_LIBRARIES} )
@@ -231,5 +252,21 @@ ENDIF (USE_BULLET)
    INCLUDE (${PROJECT_SOURCE_DIR}/testSource/model3test6/CMakeLists.txt)
    INCLUDE (${PROJECT_SOURCE_DIR}/testSource/model3universal/CMakeLists.txt)
 ENDIF(BUILD_TESTS)
+
+
+
+
+# with -fPIC
+IF(UNIX AND NOT WIN32)
+  FIND_PROGRAM(CMAKE_UNAME uname /bin /usr/bin /usr/local/bin )
+  IF(CMAKE_UNAME)
+    EXEC_PROGRAM(uname ARGS -m OUTPUT_VARIABLE CMAKE_SYSTEM_PROCESSOR)
+    SET(CMAKE_SYSTEM_PROCESSOR ${CMAKE_SYSTEM_PROCESSOR} CACHE INTERNAL
+"processor type (i386 and x86_64)")
+    IF(CMAKE_SYSTEM_PROCESSOR MATCHES "x86_64")
+      ADD_DEFINITIONS(-fPIC)
+    ENDIF(CMAKE_SYSTEM_PROCESSOR MATCHES "x86_64")
+  ENDIF(CMAKE_UNAME)
+ENDIF(UNIX AND NOT WIN32)
 ####################################
 
