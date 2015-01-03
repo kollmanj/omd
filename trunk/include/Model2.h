@@ -22,7 +22,7 @@ namespace OMD
 {
 	///	Overarching representation of the OMD model
 
-	class Model2 : virtual public Model1
+	class Model2 : public Model1
 	{
 	public:
 		///

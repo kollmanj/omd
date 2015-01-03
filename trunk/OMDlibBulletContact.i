@@ -180,11 +180,10 @@ public Model
         ~Model1(void);
         std::vector<double> solve( double t, bool storeAccels=false);
         std::vector<double> getState();
-        BodyRigid* addBodyRigid(std::string const &name, double const &mass, std::vector<double> const &inertia, std::vector<double> const &pos, std::vector<double> q, std::vector<double> const &vel, std::vector<double> const &wl, bool const &fixed=false);
+        BodyRigid* Model1::addBodyRigid(std::string const &name, double const &mass, std::vector<double> const &inertia, std::vector<double> const &pos, std::vector<double> q, std::vector<double> const &vel, std::vector<double> const &wl, bool const &fixed=false);
         Force1Body * Model1::addForceOnBody(std::string const &name, BodyRigid * body, std::vector<double> const &f, std::vector<double> const &forceLocation, bool const &forceLocal=true);
         ForceBuoyancy * Model1::addForceBuoyancy(std::string const &name, BodyRigid * body, std::vector<double> const &f, std::vector<double> const &forceLocation, bool const &forceLocal=true);
         Force1Body * Model1::addTorqueOnBody(std::string const &name, BodyRigid * body, std::vector<double> const &t, bool const &torqueLocal=true);
-        JointRevolute* Model2::addJointRevolute(std::string const& name, std::string parentname, std::vector<double> parent2joint, std::string childname, std::vector<double> joint2child, std::vector<double> axis, double q0 = 0, double u0 =0);
         Force2BodySpringDamp * Model1::addForce2BodySpringDamp ( std::string const& name, BodyRigid *body1, BodyRigid *body2, double k, double c, double fl, std::vector<double> body1Offset, std::vector<double> body2Offset);
         ForceGravity * Model1::addForceGravity(std::string const &name, double g, std::vector<double> const &direction);
         void integrate( double t0, double t1, bool storeBodyAccels=false);
@@ -276,7 +275,7 @@ public Model1
 {
         public:
         Model3(void);
-        BodyRigid* addBodyRigid(std::string const &name, double const &mass, std::vector<double> const &inertia, std::vector<double> const &pos, std::vector<double> q, std::vector<double> const &vel, std::vector<double> const &wl, bool const &fixed=false);
+        BodyRigid* Model3::addBodyRigid(std::string const &name, double const &mass, std::vector<double> const &inertia, std::vector<double> const &pos, std::vector<double> q, std::vector<double> const &vel, std::vector<double> const &wl, bool const &fixed=false);
         JointTranslational* addJointTrans(std::string const &name, BodyRigid * parent, std::vector<double> parent2joint, BodyRigid *child, std::vector<double> axis, double q0 = 0., double u0 = 0.);
         JointTranslational* addJointTrans(std::string const &name, std::string parentname, std::vector<double> parent2joint, std::string childname, std::vector<double> axis, double q0 = 0., double u0 = 0.);
         JointRevolute* addJointRevolute(std::string const& name, BodyRigid * parent, std::vector<double> parent2joint, BodyRigid* child, std::vector<double> axis, double q0 = 0, double u0 =0);
