@@ -1,7 +1,7 @@
 #ifndef OMDJOINTREVOLUTE_H
 #define OMDJOINTREVOLUTE_H
 
-#include "Joint1dof.h"
+#include "Joint1DOF.h"
 namespace OMD
 {
 	///
