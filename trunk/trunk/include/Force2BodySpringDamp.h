@@ -1,7 +1,7 @@
 #ifndef OMD_FORCE2BODYSPRINGDAMP_H
 #define OMD_FORCE2BODYSPRINGDAMP_H
 
-#include "force.h"
+#include "Force.h"
 #include "OMD.h"
 #include "BodyRigid.h"
 
@@ -11,11 +11,11 @@ namespace OMD
 		public Force
 	{
 	public:
-	/// 
+	///
 	/// Add a force and a torque vector to be summed with other forces and torques and applied to the body
-	/// 
-	/// @param[in] name: 
-	/// 
+	///
+	/// @param[in] name:
+	///
 	/// @param[in] body1: body 1 connected by spring damper
 	/// @param[in] body2: body 2 connected by spring damper
 	/// @param[in] k: spring constant
@@ -32,11 +32,11 @@ namespace OMD
 			double fl = 0,
 			Vect3 body1Offset =Vect3(0.0,0.0,0.0),
 			Vect3 body2Offset =Vect3(0.0,0.0,0.0));
-	/// 
+	///
 	/// Add a force and a torque vector to be summed with other forces and torques and applied to the body
-	/// 
-	/// @param[in] name: 
-	/// 
+	///
+	/// @param[in] name:
+	///
 	/// @param[in] body1: body 1 connected by spring damper
 	/// @param[in] body2: body 2 connected by spring damper
 	/// @param[in] k: spring constant
@@ -53,7 +53,7 @@ namespace OMD
 			double fl,
 			vector<double> body1Offset,
 			vector<double> body2Offset);
-		
+
 
 		~Force2BodySpringDamp(void);
 

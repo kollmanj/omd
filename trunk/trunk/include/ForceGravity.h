@@ -1,7 +1,7 @@
 #ifndef OMD_FORCEGRAVITY_H
 #define OMD_FORCEGRAVITY_H
 
-#include "force.h"
+#include "Force.h"
 #include "OMD.h"
 #include <vector>
 #include "BodyRigid.h"

@@ -1,7 +1,7 @@
 #ifndef OMD_MODEL1_H
 #define OMD_MODEL1_H
 
-#include "model.h"
+#include "Model.h"
 #include "BodyRigid.h"
 #include "Force1Body.h"
 #include "ForceGravity.h"
@@ -63,7 +63,7 @@ namespace OMD
 		/////
 		//   virtual unsigned int getStateSize()= 0;
 		///
-		/// Set the state vector 
+		/// Set the state vector
 		///
 		/// @param[in] std vector of the state
 		/// @return nothing
@@ -76,9 +76,9 @@ namespace OMD
 		///// @return Nothing
 		/////
 		void applyForces(double t );
-		/// 
+		///
 		/// add a Ridid Body to the model using no eigen, for use in swig
-		/// 
+		///
 		/// @param[in] name : name of the body
 		/// @param[in] mass : mass of the body
 		/// @param[in] inertia : inertia of the body
@@ -91,9 +91,9 @@ namespace OMD
 		/// @return pointer to the body added to the model
 		///
 		BodyRigid* addBodyRigid(std::string const &name, double const &mass, std::vector<double> const &inertia, std::vector<double> const &pos, std::vector<double> q, std::vector<double> const &vel, std::vector<double> const &wl, bool const &fixed=false);
-		/// 
+		///
 		/// add a Ridid Body to the model
-		/// 
+		///
 		/// @param[in] name : name of the body
 		/// @param[in] mass : mass of the body
 		/// @param[in] inertia : inertia of the body
@@ -108,43 +108,43 @@ namespace OMD
 		BodyRigid* addBodyRigid(std::string const &name, double const &mass, Mat3x3 const &inertia, Vect3 const &pos=Vect3(0,0,0), Quat const &q=Quat(1,0,0,0), Vect3 const &vel=Vect3(0,0,0), Vect3 const &wl=Vect3(0,0,0), bool const &fixed=false);
 		///
 		/// add a Force of type Force1Body to the model without Eigen, for use with swig
-		/// 
+		///
 		/// @param[in] name : name of the force
 		/// @param[in] *body : pointer to the body on which to apply the force or torque
 		/// @param[in] t : torque vector which defines the force applied to the body
 		/// @param[in] torqueLocal: true of the vector f is in local body coordinates, false indicates f is in global coordinates
-		/// 
+		///
 		/// @return pointer force of type Force1Body added to the model
 		///
-		Force1Body * addTorqueOnBody(std::string const &name, BodyRigid * body, std::vector<double> const &t, bool const &torqueLocal=true);	
+		Force1Body * addTorqueOnBody(std::string const &name, BodyRigid * body, std::vector<double> const &t, bool const &torqueLocal=true);
 		///
 		/// add a Force of type Force1Body to the model without Eigen, for use with swig
-		/// 
+		///
 		/// @param[in] name : name of the force
 		/// @param[in] *body : pointer to the body on which to apply the force or torque
 		/// @param[in] f : force vector which defines the force applied to the body
 		/// @param[in] forceLocation : location in body coordinates at which to apply the force
 		/// @param[in] forceLocal: true of the vector f is in local body coordinates, false indicates f is in global coordinates
-		/// 
+		///
 		/// @return pointer force of type Force1Body added to the model
 		///
 		Force1Body * addForceOnBody(std::string const &name, BodyRigid * body, std::vector<double> const &f, std::vector<double> const &forceLocation, bool const &forceLocal=true);
 		///
 		/// add a Force of type ForceBuoyancy to the model without Eigen, for use with swig
 		/// This is really just a 1 body force or forceOnBody.  This is a placeholder:  TODO:  change code to do buoyancy
-		/// 
+		///
 		/// @param[in] name : name of the force
 		/// @param[in] *body : pointer to the body on which to apply the force or torque
 		/// @param[in] f : force vector which defines the force applied to the body
 		/// @param[in] forceLocation : location in body coordinates at which to apply the force
 		/// @param[in] forceLocal: true of the vector f is in local body coordinates, false indicates f is in global coordinates
-		/// 
+		///
 		/// @return pointer force of type Force1Body added to the model
 		///
 		ForceBuoyancy * addForceBuoyancy(std::string const &name, BodyRigid * body, std::vector<double> const &f, std::vector<double> const &forceLocation, bool const &forceLocal=true);
 		///
 		/// add a Force of type Force1Body to the model
-		/// 
+		///
 		/// @param[in] name : name of the force
 		/// @param[in] *body : pointer to the body on which to apply the force or torque
 		/// @param[in] f : force vector which defines the force applied to the body
@@ -152,7 +152,7 @@ namespace OMD
 		/// @param[in] forceLocal: true of the vector f is in local body coordinates, false indicates f is in global coordinates
 		/// @param[in] t: torque vector which defines th torque applied to the body
 		/// @param[in] torqueLocal: true if the torque, t, is to be applied in the local body coordinates, false indicates t is in global coordinates
-		/// 
+		///
 		/// @return pointer force of type Force1Body added to the model
 		///
 		Force1Body * addForce1Body(std::string const &name, BodyRigid * body, Vect3 const &f, Vect3 const &forceLocation=Vect3(0,0,0),
@@ -161,7 +161,7 @@ namespace OMD
 		///
 		/// add a Force of type Buoyancy to the model
 		/// This is really just a 1 body force or forceOnBody.  This is a placeholder:  TODO:  change code to do buoyancy
-		/// 
+		///
 		/// @param[in] name : name of the force
 		/// @param[in] *body : pointer to the body on which to apply the force or torque
 		/// @param[in] f : force vector which defines the force applied to the body
@@ -169,7 +169,7 @@ namespace OMD
 		/// @param[in] forceLocal: true of the vector f is in local body coordinates, false indicates f is in global coordinates
 		/// @param[in] t: torque vector which defines th torque applied to the body
 		/// @param[in] torqueLocal: true if the torque, t, is to be applied in the local body coordinates, false indicates t is in global coordinates
-		/// 
+		///
 		/// @return pointer force of type Force1Body added to the model
 		///
 		ForceBuoyancy * addForceBuoyancy(std::string const &name, BodyRigid * body, Vect3 const &f, Vect3 const &forceLocation=Vect3(0,0,0),
@@ -287,7 +287,7 @@ namespace OMD
 		std::vector<Force *> m_forces;
 		bool searchForcesForName(std::string const &name);
 	private:
-		
+
 	};
 };
 #endif
