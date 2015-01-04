@@ -1,7 +1,7 @@
 #ifndef OMDOMDJOINTCYLINDRICAL_H
 #define OMDOMDJOINTCYLINDRICAL_H
 
-#include "Jointaxis.h"
+#include "JointAxis.h"
 namespace OMD
 {
 	///
