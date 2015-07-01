@@ -91,9 +91,9 @@ int main()
 	//std::cout << "a= " << a << std::endl;
 	//std::cout << "adroprow0= " << adroprow0 << std::endl;
 
-	Eigen::FullPivLU<Matrix<double,11,14>> flu(a);
+	Eigen::FullPivLU<Matrix<double,11,14> > flu(a);
 
-	Eigen::ColPivHouseholderQR<Matrix<double,11,14>> ldlt_(a);
+	Eigen::ColPivHouseholderQR<Matrix<double,11,14> > ldlt_(a);
 
 	// test initialization of Mat3
 	//Mat3x3 mat3eye= Mat3x3::Identity();

@@ -229,7 +229,7 @@ namespace OMD
         //std::vector<int> pivots = (jacobian.transpose()).getPivot();
 	    //std::vector<int> pivots;
 		////
-		Eigen::FullPivLU<Matrix<double,Dynamic,Dynamic>> flu(jacobian);
+		Eigen::FullPivLU<Matrix<double,Dynamic,Dynamic> > flu(jacobian);
 		//Eigen::ColPivHouseholderQR<Matrix<double,11,14>> ldlt_(jacobian);
 		Eigen::Matrix<int,Dynamic,Dynamic> pivots_mat =  flu.permutationQ().indices() ;
 		//std::cout << ldlt_.colsPermutation().indices() << std::endl;
@@ -283,7 +283,7 @@ namespace OMD
 
         //std::vector<int> pivots2 = (jacobianM.transpose()).getPivot();
 
-		Eigen::FullPivLU<Matrix<double,Dynamic,Dynamic>> flu2(jacobianM);
+		Eigen::FullPivLU<Matrix<double,Dynamic,Dynamic> > flu2(jacobianM);
 		//Eigen::ColPivHouseholderQR<Matrix<double,11,14>> ldlt_(jacobian);
 		Eigen::Matrix<int,Dynamic,1> pivots2_mat =  flu2.permutationQ().indices() ;
 
@@ -553,7 +553,7 @@ namespace OMD
 		    {
 		        case 0:
 					//b->setX(p);
-					b->m_pos.x() = p; 
+					b->m_pos.x() = p;
                     break;
                 case 1:
                     //b->setY(p);
