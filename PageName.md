@@ -1,0 +1,57 @@
+# Introduction #
+
+
+To illustrate how C++ code is included into the OMD project and then made available to Python I’ll document the process of adding a new force.  This force will eventually simulate the affect of buoyancy.  First we need the source code and that process is documented in a separate wiki page.  In the source code you will find two recently added files:  .h .cpp.  These are the c++ files that define how the buoyancy force works.  For these files to be included in the project they must be reference in the cmakelist.txt file.  Cmakelist.txt is used by the build system, CMake to organize the files for any number of Integrated Develop Environments (IDE).
+
+The above is sufficient to add the new code to the c++ project.  However, if we want to make the functionality available in python we must edit the .i files.  A .i file is used by swig, the tool which makes the c++ code available in Python.  There are actually two .i files which are largely the same but differ in the inclusion of bullet contact information.
+
+  1. OMDlibBulletContact.i
+  1. OMDlibNoBulletContact.i
+
+Both of these files are the same as it relates to the new buoyancy functionality.  At the top the .h file is referenced:
+
+```c++
+
+#include "ForceBuoyancy.h"
+```
+
+
+
+In the body of the file the methods which are to be exposed in python are included:
+class ForceBuoyancy:
+```c++
+
+public Force
+{
+public:
+ForceBuoyancy(std::string const &name, BodyRigid * body,
+vector<double> const &f,
+vector<double> const &forceLocation,
+bool const &forceIsLocal,
+vector<double> const &t,
+bool const &torqueIsLocal=true);
+void setTorque(double x, double y, double z);
+void setForce(double x, double y, double z);
+};
+```
+
+We need to expose one other method in python.  A force is instantiated through the model.  If possible it is best to add the force to model1 and let model2 and model3 inherit from model1 (because they are derived).  So here is the method in model1 that allows the creation of the buoyancy force:
+
+```c++
+
+class Model1 :
+public Model
+{
+public:
+Model1(void);
+...
+ForceBuoyancy * Model1::addForceBuoyancy(std::string const &name, BodyRigid * body, std::vector<double> const &f, std::vector<double> const &forceLocation, bool const &forceLocal=true);
+...
+};
+```
+
+Once those changes are made, use CMake to create the required files for your IDE (see other wiki article) and then build it in your IDE.  After the build here are the files you will need:
+  1. OMDlib.py
+  1. \_OMDlib.pyd_
+
+Those two files replace the existing two with the same name in the pyomd folder.  Now the buoyancy force is available in pyomd.
