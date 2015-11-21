@@ -30,6 +30,19 @@ public:
 
 	}
 
+	Body(const char* name )
+	{
+		m_name = name;
+		m_pos << 0,0,0;
+		m_q = Quat(1,0,0,0);
+		m_vel << 0,0,0;
+		m_wl << 0,0,0;
+
+		m_wldot = Vect3(0,0,0);
+		m_accel = Vect3(0,0,0);
+
+	}
+
 	Body(std::string const &name, Vect3 const &pos, Quat const &q, Vect3 const &vel = Vect3(0,0,0), Vect3 const &wl = Vect3(0,0,0) )
 	{
 		m_name = name;
@@ -108,9 +121,9 @@ public:
         ////// equation 6.56 page 169
         return ( 2.0 * Gdot ) * Lmat.transpose();
 	};
-	
+
 	///
-	/// 
+	///
 	Vect3 getVectorDot(Vect3 const &v) const {return getRotDot()*v;};
 
 	Vect3 localCoordinates(Vect3 const &globalCoordinates){return m_q.inverse()*(globalCoordinates - m_pos);};
@@ -123,12 +136,12 @@ public:
 	std::string m_name;
 	/// position of the body
 	Vect3 m_pos;
-	/// orientation 
+	/// orientation
 	Quat m_q;
 	/// velocity in global
 	Vect3 m_vel;
 	/// angular velocity in body coordinates, wl as in omega l for local
-	Vect3 m_wl; 
+	Vect3 m_wl;
 	/// angular acceleration, may or may not be used
 	Vect3 m_wldot;
 	/// acceleration in global, may or may not be used
