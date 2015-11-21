@@ -29,7 +29,7 @@ namespace OMD
 		m_btDDynamicsWorld = new btDiscreteDynamicsWorld (mDispatcher, mBroadphase, mSolver, mCollisionConfig);
 
 		//// write to a file to debug
-	    fout = ofstream("afile.txt");
+	    //fout = ofstream("afile.txt");
 	}
 
 	ForceCollisionDynWorld::~ForceCollisionDynWorld()

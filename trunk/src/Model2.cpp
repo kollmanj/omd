@@ -30,7 +30,7 @@ namespace OMD
 		//		}
 
 
-		//TODO: put this back in, but in Model1 
+		//TODO: put this back in, but in Model1
 		//// delete curves
 		//for (unsigned int i=0; i < m_curve2Ds.size(); ++i)
 		//{
@@ -263,7 +263,7 @@ namespace OMD
 		Quat q(orientation);
 
 		// does not matter what the position is set to
-		//BodyRigid *b = new BodyRigid(name, mass, inertia, Vect3(0,0,0), q); 
+		//BodyRigid *b = new BodyRigid(name, mass, inertia, Vect3(0,0,0), q);
 		BodyRigid *b = new BodyRigid(name, mass, inertia, Vect3(0,0,0), q, Vect3(0,0,0),Vect3(0,0,0),fixed);
 
 		m_rigidBodies.push_back ( b );
@@ -385,7 +385,7 @@ namespace OMD
 //			return NULL;
 //	}
 //#endif
-	/// TODO put this back in 
+	/// TODO put this back in
 	//Curve2DSineWave * Model2::addCurve2DSineWave(string const& name, double amp, double offset, double freq, double shift)
 	//{
 	//	Curve2DSineWave *c = new Curve2DSineWave(name,amp,offset,freq,shift);
@@ -537,7 +537,7 @@ namespace OMD
 
 		// gets the inital location of the bodies correct
 		kinematics(0);
-		//		m_tree.print();
+			m_tree.print();
 		return true;
 	}
 

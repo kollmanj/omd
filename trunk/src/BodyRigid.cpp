@@ -4,11 +4,11 @@
 namespace OMD
 {
 
-	//BodyRigid::BodyRigid(	std::string const &name, 
+	//BodyRigid::BodyRigid(	std::string const &name,
 	//			double const &mass,
 	//			vector<vector<double>> const &inertia,
-	//			vector<double> const &pos, 
-	//			vector<double> const &q, 
+	//			vector<double> const &pos,
+	//			vector<double> const &q,
 	//			vector<double> const &vel,
 	//			vector<double> const &wl,
 	//			bool const &fixed ): Body(name), m_mass(mass), m_fixed(fixed)
@@ -54,11 +54,11 @@ namespace OMD
 	//}
 
 
-	BodyRigid::BodyRigid(	std::string const &name, 
+	BodyRigid::BodyRigid(	std::string const &name,
 				double const &mass,
 				vector<double> const &inertia,
-				vector<double> const &pos, 
-				vector<double> const &q, 
+				vector<double> const &pos,
+				vector<double> const &q,
 				vector<double> const &vel,
 				vector<double> const &wl,
 				bool const &fixed ): Body(name), m_mass(mass), m_fixed(fixed)
@@ -108,8 +108,35 @@ namespace OMD
 		m_thresh = 0;
 	}
 
-	BodyRigid::BodyRigid(std::string const &name, double const &mass, Mat3x3 const &inertia, 
-		Vect3 const &pos, Quat const &q, Vect3 const &vel, Vect3 const &wl, bool const &fixed) : 
+	BodyRigid::BodyRigid(std::string const &name, double const &mass, Mat3x3 const &inertia,
+		Vect3 const &pos, Quat const &q, Vect3 const &vel, Vect3 const &wl, bool const &fixed) :
+	Body(name,pos,q,vel,wl), m_mass(mass), m_inertia(inertia), m_fixed(fixed)
+	{
+		m_appliedForce = Vect3(0,0,0);
+		m_appliedTorque = Vect3(0,0,0);
+
+		/// initialize kanes method .... TODO site the page number this this shows up on
+		m_sAhat << 0.,0.,0.,0.,0.,0.;
+		m_sFhat <<  0.,0.,0.,0.,0.,0.;
+		m_sIhat <<  0,0,0,0,0,0,
+					0,0,0,0,0,0,
+					0,0,0,0,0,0,
+					0,0,0,0,0,0,
+					0,0,0,0,0,0,
+					0,0,0,0,0,0;
+
+		m_n_alpha_t_k << 0,0,0;
+		m_n_a_t_k << 0,0,0;
+
+		// contact stuff
+		m_stiff = 0;
+		m_damp = 0;
+		m_frict = 0;
+		m_thresh = 0;
+	}
+
+	BodyRigid::BodyRigid(const char* name, double const &mass, Mat3x3 const &inertia,
+		Vect3 const &pos, Quat const &q, Vect3 const &vel, Vect3 const &wl, bool const &fixed) :
 	Body(name,pos,q,vel,wl), m_mass(mass), m_inertia(inertia), m_fixed(fixed)
 	{
 		m_appliedForce = Vect3(0,0,0);

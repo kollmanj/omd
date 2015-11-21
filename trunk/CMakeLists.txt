@@ -2,9 +2,22 @@ cmake_minimum_required(VERSION 2.8)
 
 PROJECT (OMD)
 
-if(UNIX AND NOT DEFINED CMAKE_BUILD_TYPE)
-    set(CMAKE_BUILD_TYPE "RelWithDebInfo" CACHE STRING "Choose the type of build, options are: None(CMAKE_CXX_FLAGS or CMAKE_C_FLAGS used) Debug Release RelWithDebInfo MinSizeRel.")
-endif() 
+#
+# If the user specifies -DCMAKE_BUILD_TYPE on the command line, take their definition
+# and dump it in the cache along with proper documentation, otherwise set CMAKE_BUILD_TYPE
+# to Debug prior to calling PROJECT()
+#
+IF(DEFINED CMAKE_BUILD_TYPE)
+   SET(CMAKE_BUILD_TYPE ${CMAKE_BUILD_TYPE} CACHE STRING "Choose the type of
+build, options are: None(CMAKE_CXX_FLAGS or CMAKE_C_FLAGS used) Debug
+Release RelWithDebInfo MinSizeRel.")
+ELSE()
+   SET(CMAKE_BUILD_TYPE Debug CACHE STRING "Choose the type of build,
+options are: None(CMAKE_CXX_FLAGS or CMAKE_C_FLAGS used) Debug Release
+RelWithDebInfo MinSizeRel.")
+ENDIF()
+
+#set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wall")
 
 SET(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/CMake) 
 
@@ -12,7 +25,7 @@ SET(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/CMake)
 include_directories("${PROJECT_SOURCE_DIR}/include")
 
 # just set this here for now TODO make it changeable
-#SET(BULLET_ROOT "/usr/local")
+SET(BULLET_ROOT "/usr/lib/x86_64-linux-gnu")
 
 OPTION(USE_BULLET "Build against the bullet engine" OFF)
 OPTION(SWIG_BUILD "Use Python Swig to build python libs" OFF)
@@ -107,23 +120,16 @@ SET (OMD_HDRS
 
 # if Bullet find it and stuff
 if ( USE_BULLET )
+  SET(BULLET_INCLUDE_DIRS "/usr/include/bullet")
+  set (BULLET_LIBRARIES ${BULLET_LIBRARIES} libLinearMath.so)
+  set (BULLET_LIBRARIES ${BULLET_LIBRARIES} libBulletCollision.so)
 
-  #option(<option_variable> "help string describing option" fPIC)
-  if (WIN32)
-     SET(BULLET_INCLUDE_DIRS "C:/Users/John/Documents/bullet3-2.83.5/src")
-     #set (BULLET_LIBRARIES ${BULLET_LIBRARIES} LinearMath.dll)
-     #set (BULLET_LIBRARIES ${BULLET_LIBRARIES} BulletCollision.dll)
-  else()
-	  #SET(BULLET_INCLUDE_DIRS "/usr/include/bullet")
-     SET(BULLET_INCLUDE_DIRS "C:/Users/John/Documents/bullet3-2.83.5/src")
-     set (BULLET_LIBRARIES ${BULLET_LIBRARIES} libLinearMath.a)
-     set (BULLET_LIBRARIES ${BULLET_LIBRARIES} libBulletCollision.a)
-  endif()
-  
+  option(<option_variable> "help string describing option" fPIC)
+
   INCLUDE_DIRECTORIES(${BULLET_INCLUDE_DIRS})
- 
   #set (BLD ${BLD} "/usr/local/lib")
 
+  link_directories(~/ /usr/lib/x86_64-linux-gnu/)
 
   #find_library(BULLET_LIBRARIES NAMES libLinearMath libBulletCollision HINTS ${BLD} )
 
@@ -196,18 +202,11 @@ CONFIGURE_FILE (
    )
 
 IF(SWIG_BUILD)
-   #link_directories("C:/Python34/libs")
    FIND_PACKAGE(SWIG REQUIRED)
    INCLUDE(${SWIG_USE_FILE})
-  
-   #SET(REQUIRED_PYTHON_VERSION 2.7)
-  SET(REQUIRED_PYTHON_VERSION 1.0)
-  find_package ( PythonInterp ${REQUIRED_PYTHON_VERSION} REQUIRED)
-  find_package ( PythonLibs ${PYTHON_VERSION_STRING} EXACT) 
-
+   
+   FIND_PACKAGE(PythonLibs)
    INCLUDE_DIRECTORIES(${PYTHON_INCLUDE_PATH})
-   INCLUDE_DIRECTORIES("C:/Anaconda/include")
-
    
    INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR})
    
@@ -222,7 +221,6 @@ IF(SWIG_BUILD)
      )
 IF (USE_BULLET)
    #SWIG_LINK_LIBRARIES(${PYTHON_LIBRARIES} ${BULLET_LIBRARIES})
-   #SWIG_LINK_LIBRARIES(OMDlib ${PYTHON_LIBRARIES} ${BULLET_LIBRARIES})
    SWIG_LINK_LIBRARIES(OMDlib ${PYTHON_LIBRARIES} ${BULLET_LIBRARIES})
 ELSE (USE_BULLET)
    #SWIG_LINK_LIBRARIES(${PYTHON_LIBRARIES} )
@@ -234,9 +232,8 @@ ELSE(SWIG_BUILD)
       ADD_LIBRARY( OMD 
         ${OMD_HDRS}
         ${OMD_SRCS}
+        ${BULLET_LIBRARIES}
          )
- #ADD_LIBRARY(BULLET_LIBRARIES SHARED IMPORTED)
-      #SET_PROPERTY(TARGET BULLET_LIBRARIES PROPERTY SHARED IMPORTED) 
    ELSE (USE_BULLET)
       ADD_LIBRARY( OMD 
         ${OMD_HDRS}

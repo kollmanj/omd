@@ -283,7 +283,7 @@ namespace OMD
 
         //std::vector<int> pivots2 = (jacobianM.transpose()).getPivot();
 
-		Eigen::FullPivLU<Matrix<double,Dynamic,Dynamic> > flu2(jacobianM);
+		Eigen::FullPivLU < Matrix<double,Dynamic,Dynamic> > flu2(jacobianM);
 		//Eigen::ColPivHouseholderQR<Matrix<double,11,14>> ldlt_(jacobian);
 		Eigen::Matrix<int,Dynamic,1> pivots2_mat =  flu2.permutationQ().indices() ;
 
