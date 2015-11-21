@@ -47,7 +47,7 @@ namespace OMD
 			ForceContact ( string const& name, double stiff, double damp, double frict, double thresh );
 			///
 			/// add a Box shape to the body which will collide with other contact geometry in the model
-			/// 
+			///
 			/// @param[in] x
 			/// @param[in] y
 			/// @param[in] z
@@ -57,13 +57,13 @@ namespace OMD
 			/// @return nothing
 			///
 			void addBox(double x, double y, double z, Vect3 offset = Vect3(0,0,0), Mat3x3 rot = Mat3x3::Identity(),BodyRigid *body=0);
-			void addBox(double x, double y, double z, vector<double> offset, vector<double> rot, BodyRigid *body=0);
+			void addBox(double x, double y, double z, std::vector<double> offset, std::vector<double> rot, BodyRigid *body=0);
 			void addCapsule(double radius, double height, Vect3 offset = Vect3(0,0,0), Mat3x3 rot = Mat3x3::Identity(),BodyRigid *body=0);
-			void addCapsule(double radius, double height, vector<double> offset, vector<double> rot, BodyRigid *body=0);
+			void addCapsule(double radius, double height, std::vector<double> offset, std::vector<double> rot, BodyRigid *body=0);
 			void addSphere(double radius, Vect3 offset = Vect3(0,0,0), Mat3x3 rot = Mat3x3::Identity(),BodyRigid *body=0);
-			void addSphere(double radius, vector<double> offset, vector<double> rot, BodyRigid *body=0);
+			void addSphere(double radius, std::vector<double> offset, std::vector<double> rot, BodyRigid *body=0);
 			void addCylinder(double radius, double width, Vect3 offset= Vect3(0,0,0), Mat3x3 rot= Mat3x3::Identity(), BodyRigid * body=0);
-			void addCylinder(double radius, double width, vector<double> offset, vector<double> rot, BodyRigid *body=0);
+			void addCylinder(double radius, double width, std::vector<double> offset, std::vector<double> rot, BodyRigid *body=0);
 			void addTire(BodyRigid *body);
 			void addTire(double radius, double width, Vect3 offset, Mat3x3 rot, BodyRigid * body, OMD::Curve2DLinInterp slipCurve);
 			std::vector<double> getContactForces(Body *b){return m_c[b];};

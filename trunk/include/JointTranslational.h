@@ -43,10 +43,10 @@ public:
 	/// @return The status of the call
 	///
     JointTranslational(string const &name, BodyRigid * parent,
-		vector<double> const &parent2joint,
+		std::vector<double> const &parent2joint,
 		BodyRigid *child,
-		vector<double> const &joint2child,
-		vector<double> const &axis,
+		std::vector<double> const &joint2child,
+		std::vector<double> const &axis,
 		double q0 = 0., double u0 = 0.);
 	///
 	/// Construct a translational joint
@@ -76,7 +76,7 @@ public:
     virtual MatNxN getJacobianModified( int ParentOrChild );
     virtual MatNxN getJacobian( int ParentOrChild );
     virtual VectN getGamaPound();
-    virtual vector<double> getViolation();	
+    virtual std::vector<double> getViolation();
 	///
 	/// sorry for the terrible name but it's physical significance is ?
 	/// this is equestion 41 page 51 of Anderson

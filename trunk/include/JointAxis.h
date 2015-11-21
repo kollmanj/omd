@@ -14,10 +14,10 @@ public:
 		/// same as axis in child
 		JointAxis(string const &name,
 				BodyRigid *parent,
-				vector<double> const &parent2joint,
+				std::vector<double> const &parent2joint,
 				BodyRigid *child,
-				vector<double> const &joint2child,
-				vector<double> const &axisInParent);
+				std::vector<double> const &joint2child,
+				std::vector<double> const &axisInParent);
 
 		/// constructor if the axis and the parent is
 		/// same as axis in child
@@ -45,11 +45,11 @@ public:
 ///
 			JointAxis(string const &name,
 				BodyRigid *parent,
-				vector<double> const &parent2joint,
-				vector<double> const &axisInParent,
+				std::vector<double> const &parent2joint,
+				std::vector<double> const &axisInParent,
 				BodyRigid *child,
-				vector<double> const &joint2child,
-				vector<double> const &axisInChild);
+				std::vector<double> const &joint2child,
+				std::vector<double> const &axisInChild);
 
 
             virtual MatNxN getJacobianModified( int ParentOrChild)=0;
@@ -60,7 +60,7 @@ public:
             MatNxN getC(int ParentOrChild = PARENT);
             MatNxN getC2(int ParentOrChild = PARENT);
 			virtual ~JointAxis(){};
-			virtual vector<double> getViolation()=0;
+			virtual std::vector<double> getViolation()=0;
 			/////
 			///// sorry for the terrible name but it's physical significance is ?
 			///// this is equestion 41 page 51 of Anderson

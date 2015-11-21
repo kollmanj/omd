@@ -20,8 +20,8 @@ class Force1Body :
 public:
 	Force1Body(std::string const &name, BodyRigid * body, Vect3 const &f, Vect3 const &forceLocation=Vect3(0,0,0),
 							bool const &forceIsLocal=true, Vect3 const &t=Vect3(0,0,0), bool const &torqueIsLocal=true);
-	Force1Body(std::string const &name, BodyRigid * body, vector<double> const &f, vector<double> const &forceLocation,
-							bool const &forceIsLocal, vector<double> const &t, bool const &torqueIsLocal=true);
+	Force1Body(std::string const &name, BodyRigid * body, std::vector<double> const &f, std::vector<double> const &forceLocation,
+							bool const &forceIsLocal, std::vector<double> const &t, bool const &torqueIsLocal=true);
 	~Force1Body(void);
 
 	/// set the location on the body, in local body coordinates, at which the force acts
@@ -30,8 +30,8 @@ public:
 	/// @return Nothing
 	///
 	void setFoceLocation(Vect3 const &l){m_forceCoord = l;};
-	
-	/// set the force to be in local body coordinates 
+
+	/// set the force to be in local body coordinates
 	void setForceLocal(){m_forceIsLocal=true;};
 	/// set the torque to be in local body coordinates
 	void setTorqueLocal(){m_torqueIsLocal=true;};

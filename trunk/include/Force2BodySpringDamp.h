@@ -51,8 +51,8 @@ namespace OMD
 			double k,
 			double c,
 			double fl,
-			vector<double> body1Offset,
-			vector<double> body2Offset);
+			std::vector<double> body1Offset,
+			std::vector<double> body2Offset);
 
 
 		~Force2BodySpringDamp(void);

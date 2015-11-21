@@ -68,10 +68,10 @@ namespace OMD
 		/// return pointer to joint
 		///
 		JointTranslational* addJointTranslational(string const &name, BodyRigid * parent,
-			vector<double> const &parent2joint,
+			std::vector<double> const &parent2joint,
 			BodyRigid *child,
-			vector<double> const &joint2child,
-			vector<double> const & axis,
+			std::vector<double> const &joint2child,
+			std::vector<double> const & axis,
 			double q0 = 0., double u0 = 0.);
 
 		///
@@ -108,10 +108,10 @@ namespace OMD
 		/// return pointer to joint
 		///
 		JointTranslational* addJointTranslational(string const &name, std::string parentname,
-			vector<double> parent2joint,
+			std::vector<double> parent2joint,
 			std::string childname,
-			vector<double> joint2child,
-			vector<double> axis,
+			std::vector<double> joint2child,
+			std::vector<double> axis,
 			double q0 = 0., double u0 = 0.);
 
 		///
@@ -129,10 +129,10 @@ namespace OMD
 		///
 		JointRevolute* addJointRevolute(	string const& name,
 			BodyRigid * parent,
-			vector<double> parent2joint,
+			std::vector<double> parent2joint,
 			BodyRigid* child,
-			vector<double> joint2child,
-			vector<double> axis,
+			std::vector<double> joint2child,
+			std::vector<double> axis,
 			double q0 = 0,
 			double u0 =0);
 
@@ -173,10 +173,10 @@ namespace OMD
 		///
 		JointRevolute* addJointRevolute(	string const& name,
 			std::string parentname,
-			vector<double> parent2joint,
+			std::vector<double> parent2joint,
 			std::string childname,
-			vector<double> joint2child,
-			vector<double> axis,
+			std::vector<double> joint2child,
+			std::vector<double> axis,
 			double q0 = 0,
 			double u0 =0);
 
@@ -238,8 +238,8 @@ namespace OMD
 		///
 		BodyRigid* addBodyRigid (  string name,
 			double mass,
-			vector<double> inertia,
-			vector<double> orientation,
+			std::vector<double> inertia,
+			std::vector<double> orientation,
 			bool fixed = false);
 		///
 		/// add a Rigid Body
@@ -372,7 +372,7 @@ namespace OMD
 		//			vector<Branch *> m_branches;
 
 		//		std::vector<Body *> m_bodies;
-		//TODO: put this back in, but in Model1 
+		//TODO: put this back in, but in Model1
 		//std::vector<Curve2D *> m_curve2Ds;
 
 	};

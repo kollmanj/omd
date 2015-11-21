@@ -3,7 +3,7 @@
 
 #include <iostream>
 
-/*! \mainpage OMD 
+/*! \mainpage OMD
  *
  * \section intro_sec Introduction
  *
@@ -43,7 +43,7 @@ using namespace std;
 namespace OMD
 {
 const double PI = 4.0*atan(1.0);
-typedef Quaternion<double> Quat;
+typedef Eigen::Quaternion<double> Quat;
 typedef Eigen::Matrix<double,3,3> Mat3x3;
 typedef Eigen::Matrix<double,3,4> Mat3x4;
 typedef Eigen::Matrix<double,4,3> Mat4x3;
@@ -55,9 +55,20 @@ typedef Eigen::Vector4d Vect4;
 typedef Eigen::Matrix<double,6,1> Vect6;
 typedef Eigen::Matrix<double,Dynamic,1> VectN;
 typedef double Scalar;
+
 //typedef Mat3x3(Quat(1,0,0,0)) eye;
 #define LOCAL_COORD true;
 #define GLOBAL_COORD false;
+
+inline Mat3x3 define(Vect3 row1, Vect3 row2, Vect3 row3)
+{
+    Mat3x3 out;
+    out(0,0)=row1(0); out(0,1)=row1(1); out(0,2)=row1(2);
+    out(1,0)=row2(0); out(1,1)=row2(1); out(1,2)=row2(2);
+    out(1,0)=row1(0); out(1,1)=row1(1); out(2,2)=row1(2);
+
+    return out;
+}
 
 inline Mat3x3 skew(Vect3 const &a)
 {

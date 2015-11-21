@@ -9,9 +9,9 @@ namespace OMD
 		public JointAxis
 	{
 	public:
-		
-		Joint1DOF(string const &name, BodyRigid *parent, vector<double> const &parent2joint,
-			BodyRigid *child, vector<double> const &joint2child,vector<double> const &axisInParent,double q0 = 0., double u0 = 0. );
+
+		Joint1DOF(string const &name, BodyRigid *parent, std::vector<double> const &parent2joint,
+			BodyRigid *child, std::vector<double> const &joint2child,std::vector<double> const &axisInParent,double q0 = 0., double u0 = 0. );
 
 		Joint1DOF(string const &name, BodyRigid *parent,Vect3 parent2joint,
 			BodyRigid *child, Vect3 joint2child,Vect3 axisInParent,double q0 = 0., double u0 = 0. );
@@ -47,7 +47,7 @@ namespace OMD
 		Mat3x3 GetRotFromParent2Child(){return pk_A_k;};
 		virtual MatNxN getJacobianModified( int ParentOrChild )=0;
 		virtual VectN getGamaPound()=0;
-		virtual vector<double> getViolation()=0;
+		virtual std::vector<double> getViolation()=0;
 		///
 		/// sorry for the terrible name but it's physical significance is ?
 		/// this is equestion 41 page 51 of Anderson

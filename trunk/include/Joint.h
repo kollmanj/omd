@@ -28,7 +28,7 @@ namespace OMD
 		/// @param child BodyRigid which serves as the child
 		/// @param joint2child Vector describing the location of the child relative to the joint in parent coordinates
 		///
-		Joint(string name, BodyRigid *parent, vector<double> const &parent2joint, BodyRigid *child, vector<double> const &joint2child);
+		Joint(string name, BodyRigid *parent, std::vector<double> const &parent2joint, BodyRigid *child, std::vector<double> const &joint2child);
 
 		///
 		/// Constructor
@@ -151,7 +151,7 @@ namespace OMD
 		///
 		/// Violation of Joint Constraint
 		///
-		virtual vector<double> getViolation()=0;
+		virtual std::vector<double> getViolation()=0;
 		///
 		/// page 201 table 7.1 Nikravesh
 		///

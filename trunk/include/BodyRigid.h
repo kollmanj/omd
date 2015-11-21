@@ -1,5 +1,5 @@
 #ifndef OMD_BODYRIGID_H
-#define OMD_BODYRIGID_H 
+#define OMD_BODYRIGID_H
 
 #include "Body.h"
 #include <vector>
@@ -20,36 +20,46 @@ public:
 	///
 	/// Constructor without eigen entities
 	///
-	BodyRigid(	std::string const &name, 
+	BodyRigid(	std::string const &name,
 				double const &mass,
-				vector<double> const &inertia,
-				vector<double> const &pos, 
-				vector<double> const &q, 
-				vector<double> const &vel,
-				vector<double> const &wl,
+				std::vector<double> const &inertia,
+				std::vector<double> const &pos,
+				std::vector<double> const &q,
+				std::vector<double> const &vel,
+				std::vector<double> const &wl,
 				bool const &fixed = false);
 	/////
 	///// Constructor without eigen entities
 	/////
-	//BodyRigid(	std::string const &name, 
+	//BodyRigid(	std::string const &name,
 	//			double const &mass,
 	//			vector<vector<double>> const &inertia,
-	//			vector<double> const &pos, 
-	//			vector<double> const &q, 
+	//			vector<double> const &pos,
+	//			vector<double> const &q,
 	//			vector<double> const &vel,
 	//			vector<double> const &wl,
 	//			bool const &fixed = false);
 	///
 	/// Constructor with eigen entities
 	///
-	BodyRigid(	std::string const &name, 
+	BodyRigid(	std::string const &name,
 				double const &mass,
 				Mat3x3 const &inertia,
-				Vect3 const &pos = Vect3(0,0,0), 
-				Quat const &q = Quat(1,0,0,0), 
+				Vect3 const &pos = Vect3(0,0,0),
+				Quat const &q = Quat(1,0,0,0),
 				Vect3 const &vel = Vect3(0,0,0),
 				Vect3 const &wl = Vect3(0,0,0),
 				bool const &fixed = false);
+
+    BodyRigid(	const char* name,
+				double const &mass,
+				Mat3x3 const &inertia,
+				Vect3 const &pos = Vect3(0,0,0),
+				Quat const &q = Quat(1,0,0,0),
+				Vect3 const &vel = Vect3(0,0,0),
+				Vect3 const &wl = Vect3(0,0,0),
+				bool const &fixed = false);
+
 	~BodyRigid(void);
 
 	///
@@ -76,43 +86,43 @@ public:
 	Vect3 getVelocityGlobal(){return m_vel;};
 	void setPosition(Vect3 const &v){m_pos = v;};
 
-	
+
 
 	/// solve for translational Acceleration with No Constraints
 	Vect3 solveTransAccel(bool storeAccels=false);
 	/// solve for rotational Acceleration with No Constraints
 	Vect3 solveRotAccel(bool storeAccels=false);
 
-	/// 
+	///
 	/// Add a force vector to be summed with other forces and applied to the body
-	/// 
+	///
 	/// @param[in] f: the force to be applied to the body at the center of mass, i.e. no resulting torque
 	/// @param[in] isInLocal: true if force is expressed in local body coordinates false if in global
 	///
 	void forceAccum(Vect3 const &f, bool isInLocal = true);
-	/// 
-	/// Add a force vector to be summed with other forces and applied to the body, 
+	///
+	/// Add a force vector to be summed with other forces and applied to the body,
 	/// if forceAppLocal is not at the center of mass there will be a resulting torque that will be computed
 	/// and added to the body
-	/// 
+	///
 	/// @param[in] f: the force to be applied to the body at the center of mass, i.e. no resulting torque
 	/// @param[in] isInLocal: true if force is expressed in local body coordinates false if in global
 	/// @param[in] forceAppLocal: location in body coordintes of the force
 	///
 	void forceAccum(Vect3 const &f, bool isInLocal, Vect3 const &forceAppLocal);
 	void forceAccumGlobal(Vect3 const &globalForce, Vect3 const &globalPnt);
-	/// 
+	///
 	/// Add a torque vector to be summed with other forces and applied to the body
-	/// 
+	///
 	/// @param[in] t: the torque to be applied to the body
 	/// @param[in] isInLocal: true if torque is expressed in local body coordinates false if in global
 	///
 	void torqueAccum(Vect3 const &t, bool isInLocal = true);
-	/// 
+	///
 	/// Add a force and a torque vector to be summed with other forces and torques and applied to the body
-	/// 
+	///
 	/// @param[in] f: force applied to body
-	/// 
+	///
 	/// @param[in] t: the torque to be applied to the body
 	/// @param[in] forceInLocal: true if force is expressed in local body coordinates false if in global
 	/// @param[in] forceAppLocal: force application point in body coordinates
@@ -139,7 +149,7 @@ public:
 
 	/// Vector to sum the forces applied in global coordinates
 	Vect3 m_appliedForce; // global
-	
+
 	/// Vector to sum the torque applied in local coordinates
 	Vect3 m_appliedTorque; //local
 

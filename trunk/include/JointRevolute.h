@@ -34,7 +34,7 @@ namespace OMD
 	/// @param[in] axis direction DOF in parent
 	/// @return The status of the call
 	///
-	JointRevolute ( string const& name, BodyRigid* parent, vector<double> parent2joint, BodyRigid* child, vector<double> joint2child, vector<double> axis,double q0=0, double u0=0 );
+	JointRevolute ( string const& name, BodyRigid* parent, std::vector<double> parent2joint, BodyRigid* child, std::vector<double> joint2child, std::vector<double> axis,double q0=0, double u0=0 );
 
 	~JointRevolute();
 
@@ -60,7 +60,7 @@ namespace OMD
     virtual MatNxN getJacobianModified( int ParentOrChild);
     virtual MatNxN getJacobian( int ParentOrChild );
     virtual VectN getGamaPound();
-    virtual vector<double> getViolation();
+    virtual std::vector<double> getViolation();
 	///
 	/// sorry for the terrible name but it's physical significance is ?
 	/// this is equestion 41 page 51 of Anderson

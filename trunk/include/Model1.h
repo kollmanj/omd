@@ -186,7 +186,7 @@ namespace OMD
 		///
 		/// @return pointer to ForceGravity
 		///
-		ForceGravity * addForceGravity(std::string const &name, double g, vector<double> const &direction);
+		ForceGravity * addForceGravity(std::string const &name, double g, std::vector<double> const &direction);
 		///
 		/// add a Force which applies the defined magnitude and direction of gravity to all bodies in the model
 		///
