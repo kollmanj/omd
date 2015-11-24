@@ -19,6 +19,10 @@ ENDIF()
 
 #set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wall")
 
+# adding this to solve a problem in visual studio, may need to put it in an if statement
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
+
 SET(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/CMake) 
 
 # add the binary tree to the search path for include files
@@ -28,18 +32,27 @@ include_directories("${PROJECT_SOURCE_DIR}/include")
 SET(BULLET_ROOT "/usr/lib/x86_64-linux-gnu")
 
 OPTION(USE_BULLET "Build against the bullet engine" OFF)
-OPTION(SWIG_BUILD "Use Python Swig to build python libs" OFF)
+OPTION(SWIG_BUILD "Use javascript Swig to build javascript libs" OFF)
 OPTION(USE_OGRE "Build against the Ogre engine" OFF)
 OPTION(BUILD_TESTS "Build the Executables for Testing" ON)
-#OPTION(DEBUG_BUILD "Build Debug" OFF)
-#IF (DEBUG_BUILD)
-#   ADD_DEFINITIONS(-DDEBUG_BUILD)
-#ENDIF (DEBUG_BUILD)
+# need to manually change visual studio to release
+OPTION(DEBUG_BUILD "Build Debug" OFF)
+IF (DEBUG_BUILD)
+   ADD_DEFINITIONS(-DDEBUG_BUILD)
+ENDIF (DEBUG_BUILD)
 
 # alway need eigen
 #SET(EIGEN_ROOT "C:/Users/john/Documents/eigen-eigen-3.0.1" CACHE TYPE STRING)
 #SET(EIGEN_ROOT "C:/Users/kollmaj/Documents/eigen4" CACHE TYPE STRING)
-SET(EIGEN_ROOT "/home/john/eigen/eigen-eigen-1306d75b4a21" CACHE TYPE STRING)
+#IF(UNIX AND NOT WIN32)
+IF(UNIX)
+   SET(EIGEN_ROOT "/home/john/eigen/eigen-eigen-1306d75b4a21" CACHE TYPE STRING)
+   #ELSE(UNIX AND NOT WIN32)
+ELSE(UNIX)
+   SET(EIGEN_ROOT "C:/Users/John/Documents/eigen-eigen-db42621b4cd0" CACHE TYPE STRING)
+   #ENDIF(UNIX AND NOT WIN32)
+ENDIF(UNIX)
+
 INCLUDE_DIRECTORIES(${EIGEN_ROOT})
 
 
@@ -120,16 +133,25 @@ SET (OMD_HDRS
 
 # if Bullet find it and stuff
 if ( USE_BULLET )
+	#IF(UNIX AND NOT WIN32)
+IF(UNIX)
   SET(BULLET_INCLUDE_DIRS "/usr/include/bullet")
   set (BULLET_LIBRARIES ${BULLET_LIBRARIES} libLinearMath.so)
   set (BULLET_LIBRARIES ${BULLET_LIBRARIES} libBulletCollision.so)
+  link_directories(~/ /usr/lib/x86_64-linux-gnu/)
+  #ELSE(UNIX AND NOT WIN32)
+ELSE(UNIX)
+  SET(BULLET_INCLUDE_DIRS "C:/Users/John/Documents/bullet3-2.83.5/src")
+  set (BULLET_LIBRARIES ${BULLET_LIBRARIES} C:/Users/John/Documents/bullet3-2.83.5/mybuild/lib/Release/LinearMath.lib)
+  set (BULLET_LIBRARIES ${BULLET_LIBRARIES} C:/Users/John/Documents/bullet3-2.83.5/mybuild/lib/Release/BulletCollision.lib)
+  #ENDIF(UNIX AND NOT WIN32)
+ENDIF(UNIX)
 
   option(<option_variable> "help string describing option" fPIC)
 
   INCLUDE_DIRECTORIES(${BULLET_INCLUDE_DIRS})
   #set (BLD ${BLD} "/usr/local/lib")
 
-  link_directories(~/ /usr/lib/x86_64-linux-gnu/)
 
   #find_library(BULLET_LIBRARIES NAMES libLinearMath libBulletCollision HINTS ${BLD} )
 
@@ -205,26 +227,27 @@ IF(SWIG_BUILD)
    FIND_PACKAGE(SWIG REQUIRED)
    INCLUDE(${SWIG_USE_FILE})
    
-   FIND_PACKAGE(PythonLibs)
+   #FIND_PACKAGE(PythonLibs)
    INCLUDE_DIRECTORIES(${PYTHON_INCLUDE_PATH})
    
    INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR})
    
-   SET(CMAKE_SWIG_FLAGS "")
+   SET(CMAKE_SWIG_FLAGS "-javascript -jsc")
    
    SET_SOURCE_FILES_PROPERTIES(OMDlib.i PROPERTIES CPLUSPLUS ON)
    #SET_SOURCE_FILES_PROPERTIES(OMD.i PROPERTIES SWIG_FLAGS "-includeall")
-   SWIG_ADD_MODULE(OMDlib python
+   SWIG_ADD_MODULE(OMDlib 
      OMDlib.i 
      ${OMD_HDRS}
      ${OMD_SRCS}
      )
+
 IF (USE_BULLET)
    #SWIG_LINK_LIBRARIES(${PYTHON_LIBRARIES} ${BULLET_LIBRARIES})
-   SWIG_LINK_LIBRARIES(OMDlib ${PYTHON_LIBRARIES} ${BULLET_LIBRARIES})
+   SWIG_LINK_LIBRARIES(OMDlib ${BULLET_LIBRARIES})
 ELSE (USE_BULLET)
    #SWIG_LINK_LIBRARIES(${PYTHON_LIBRARIES} )
-   SWIG_LINK_LIBRARIES(OMDlib ${PYTHON_LIBRARIES} )
+   SWIG_LINK_LIBRARIES(OMDlib )
 ENDIF (USE_BULLET)
 
 ELSE(SWIG_BUILD)
@@ -270,7 +293,8 @@ ENDIF(BUILD_TESTS)
 
 
 # with -fPIC
-IF(UNIX AND NOT WIN32)
+#IF(UNIX AND NOT WIN32)
+IF(UNIX)
   FIND_PROGRAM(CMAKE_UNAME uname /bin /usr/bin /usr/local/bin )
   IF(CMAKE_UNAME)
     EXEC_PROGRAM(uname ARGS -m OUTPUT_VARIABLE CMAKE_SYSTEM_PROCESSOR)
@@ -280,6 +304,7 @@ IF(UNIX AND NOT WIN32)
       ADD_DEFINITIONS(-fPIC)
     ENDIF(CMAKE_SYSTEM_PROCESSOR MATCHES "x86_64")
   ENDIF(CMAKE_UNAME)
-ENDIF(UNIX AND NOT WIN32)
+  #ENDIF(UNIX AND NOT WIN32)
+ENDIF(UNIX)
 ####################################
 
