@@ -17,6 +17,13 @@ void ball1()
 	Vect3 initialLocation(0,0,1);
 	Vect3 transVel(1,2,3);
 	Vect3 rotVel(4,5,6);
+
+	BodyRigid balltest1("ball",ballmass,OMD::eye(),initialLocation,Quat(1,0,0,0),transVel,rotVel,false);
+    Mat3x3 balltest1_inertia = balltest1.getMassInertia();
+
+    cout << "hi" << endl;
+    cout << balltest1_inertia;
+
 	BodyRigid *ball = mymodel.addBodyRigid("ball",ballmass,OMD::eye(),initialLocation,Quat(1,0,0,0),transVel,rotVel,false);
 
 	Vect3 frc(0,0,-g*ballmass);
@@ -110,6 +117,8 @@ int main()
 
 	//std::cout << "No Test" << std::endl;
 	std::cout << "Pass" << std::endl;
+
+	ball1();
 	return 0;
 }
 

@@ -1,6 +1,7 @@
 #ifndef OMD_BODYRIGID_H
 #define OMD_BODYRIGID_H
 
+#include "OMD.h"
 #include "Body.h"
 #include <vector>
 
@@ -137,6 +138,9 @@ public:
 	Vect3 getPointInLocal(Vect3 const &pntGlobal) const;
 	Vect3 getAppliedForce(){return m_appliedForce;};
 	Vect3 getAppliedTorque(){return m_appliedTorque;};
+	Mat3x3 getMassInertia(){return m_inertia;};
+	void setMassInertia(Vect3 const &row0,Vect3 const &row1,Vect3 const &row2);
+	double getMassInertiaElement(int i, int j);
 
 	void dynamicAccumReset();
 

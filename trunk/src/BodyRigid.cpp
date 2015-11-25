@@ -167,6 +167,18 @@ namespace OMD
 	{
 	}
 
+    void BodyRigid::setMassInertia(Vect3 const &row0,Vect3 const &row1,Vect3 const &row2)
+    {
+        m_inertia(0,0)=row0.x(); m_inertia(0,1)=row0.y(); m_inertia(0,2)=row0.z();
+        m_inertia(1,0)=row1.x(); m_inertia(1,1)=row1.y(); m_inertia(1,2)=row1.z();
+        m_inertia(2,0)=row2.x(); m_inertia(2,1)=row2.y(); m_inertia(2,2)=row2.z();
+    }
+
+    double BodyRigid::getMassInertiaElement(int i, int j)
+    {
+        return m_inertia(i,j);
+    }
+
 	void BodyRigid::defineContact(double stiff, double damp, double frict, double thresh)
 	{
 		m_stiff = stiff;
