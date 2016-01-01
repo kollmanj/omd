@@ -79,6 +79,14 @@ namespace OMD
 		///
 		/// add a Ridid Body to the model using no eigen, for use in swig
 		///
+		/// @param[in] rigidBody : the body
+		///
+		/// @return pointer to the body added to the model
+		///
+		BodyRigid* addBodyRigid(BodyRigid *rigidBody);
+		///
+		/// add a Ridid Body to the model using no eigen, for use in swig
+		///
 		/// @param[in] name : name of the body
 		/// @param[in] mass : mass of the body
 		/// @param[in] inertia : inertia of the body
@@ -269,7 +277,7 @@ namespace OMD
 		/// @param[in] bodyname Name of the body to get
 		/// @return the body
 		///
-		BodyRigid *getBody( string bodyname );
+		BodyRigid *getBody( std::string bodyname );
 
 		///
 		/// set the integration scheme to RK4 which it is by default, so you would only need this if integration scheme was changed

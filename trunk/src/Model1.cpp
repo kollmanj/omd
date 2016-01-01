@@ -67,6 +67,12 @@ namespace OMD
 		return state_vector_dot;
 	}
 
+    BodyRigid* Model1::addBodyRigid(BodyRigid *rigidBody)
+    {
+        m_rigidBodies.push_back ( rigidBody );
+        return rigidBody;
+    }
+
 	BodyRigid* Model1::addBodyRigid(std::string const &name, double const &mass, std::vector<double> const &inertia, std::vector<double> const &pos, std::vector<double> q, std::vector<double> const &vel, std::vector<double> const &wl, bool const &fixed)
 	{
 		BodyRigid *b = new BodyRigid(name,mass,inertia,pos,q,vel,wl,fixed);
@@ -320,6 +326,7 @@ namespace OMD
 		 std::vector< BodyRigid *>::reverse_iterator rit;
 		for (rit = m_rigidBodies.rbegin(); rit < m_rigidBodies.rend(); ++rit )
 		{
+		    //cout << (*rit)->m_name << std::endl;
 		    BodyRigid *body = (*rit);
 		    double e3 = state_vector.back();
 		    state_vector.pop_back();
@@ -380,12 +387,16 @@ namespace OMD
 		return false;
 	}
 
-	BodyRigid* Model1::getBody( string bodyname )
+	BodyRigid* Model1::getBody( std::string bodyname )
 	{
 		string name;
+		//cout << bodyname << std::endl;
+		//cout << "here" << std::endl;
+
 		std::vector< BodyRigid *>::reverse_iterator rit;
 		for (rit = m_rigidBodies.rbegin(); rit < m_rigidBodies.rend(); ++rit )
 		{
+		    //cout << (*rit)->m_name << std::endl;
 			if (bodyname == (*rit)->m_name)
 			{
 				return (*rit);

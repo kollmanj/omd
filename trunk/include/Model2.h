@@ -204,7 +204,10 @@ namespace OMD
 
 
 		Joint *getJoint( 	string jointname );
+		JointTranslational *getJointTranslational( string jointname );
+		JointRevolute *getJointRevolute( string jointname );
 		Force *getForce(  string forcename );
+		Force1Body* getForce1Body( string forcename );
 
 		///
 		/// Build Tree
@@ -256,6 +259,21 @@ namespace OMD
 			Mat3x3 inertia,
 			Mat3x3 orientation,
 			bool fixed = false);
+        ///
+		/// add a Rigid Body
+		///
+		/// @param name name of the body
+		/// @param mass mass of the body
+		/// @param inertia inertia of the body
+		/// @param orientaiton orientation of the body in the form a quaternion
+		/// @param fixed true if body is fixed to the ground
+		/// return rigid body
+		///
+        BodyRigid* addBodyRigid (	string name,
+            double mass,
+            Mat3x3 inertia,
+            Quat orientation,
+            bool fixed=false);
 
 		Vect3 getBodyPosition( string bodyname );
 		Mat3x3 getBodyRot( string bodyname );

@@ -270,6 +270,21 @@ namespace OMD
 		return b;
 	}
 
+	BodyRigid* Model2::addBodyRigid (	string name,
+		double mass,
+		Mat3x3 inertia,
+		Quat orientation,
+		bool fixed)
+	{
+		Quat q=orientation;
+
+		// does not matter what the position is set to
+		//BodyRigid *b = new BodyRigid(name, mass, inertia, Vect3(0,0,0), q);
+		BodyRigid *b = new BodyRigid(name, mass, inertia, Vect3(0,0,0), q, Vect3(0,0,0),Vect3(0,0,0),fixed);
+
+		m_rigidBodies.push_back ( b );
+		return b;
+    }
 	//	bool Model2::addForce ( Force1Body f )
 	//	{
 	//		if (m_forces.find(f.getName()) == m_forces.end())
@@ -562,6 +577,12 @@ namespace OMD
 
 	void Model2::setState(std::vector<double> state_vector )
 	{
+//	    cout << "set state" <<  std::endl;
+
+
+//        for (std::vector<double>::const_iterator i = state_vector.begin(); i != state_vector.end(); ++i)
+//            std::cout << *i << ' ';
+
 		m_tree.setState( state_vector );
 
 	}
@@ -605,8 +626,19 @@ namespace OMD
 		return rot;
 	}
 
+    // TODO: check make sure it is actually a translational Joint
+    JointTranslational * Model2::getJointTranslational( string jointname )
+    {
+        JointTranslational * jnt = dynamic_cast<JointTranslational*> (getJoint(jointname));
+        return jnt;
+    }
 
-
+    // TODO: check make sure it is actually a Revolute Joint
+    JointRevolute * Model2::getJointRevolute( string jointname )
+    {
+        JointRevolute * jnt = dynamic_cast<JointRevolute*> (getJoint(jointname));
+        return jnt;
+    }
 
 	Joint* Model2::getJoint( string jointname )
 	{
@@ -619,6 +651,13 @@ namespace OMD
 		}
 		return NULL;
 	}
+
+    // TODO: check make sure it is actually a Force1Body
+    Force1Body* Model2::getForce1Body( string forcename )
+    {
+        Force1Body * frc = dynamic_cast<Force1Body*> (getForce(forcename));
+        return frc;
+    }
 
 	Force* Model2::getForce( string forcename )
 	{
