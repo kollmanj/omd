@@ -39,7 +39,7 @@
 //#include "OMDTree.h"
 //#include "OMDConfig.h"  // includes USE_BULLET or not
 //#ifdef USE_BULLET  // only include this if using bullet
-//#include "ForceContact.h"
+#include "ForceContact.h"
 //#endif
 //#ifdef USE_OGRE	// include for ogre
 //#include "OMDForceCollisionDynWorld.h"
@@ -70,6 +70,9 @@ namespace OMD
 		~Model3();
 		Force *getForce(  string forcename );
 		void calcIndependentStates();
+		std::vector<int> getIndependentIndices();
+		std::vector<int> getIndependentIndices2();
+		std::vector<int> getDependentIndices();
 
 		MatNxN getConstraintViolation();
 		///
@@ -260,7 +263,7 @@ namespace OMD
 			BodyRigid* child
 			);
 		///
-		/// add a joint of type: addJointUniversal 
+		/// add a joint of type: addJointUniversal
 		///
 		/// @param[in] name name of joint to add
 		/// @param[in] parent parent body
@@ -322,10 +325,14 @@ namespace OMD
 		/// return Nothing
 		///
 		virtual std::vector<double> solve(double t, bool storeAccels = false );
+		///
+		/// Solve for dependendant states given independent
+		///
+		void kinematicSolve(std::vector<double> indStates);
 
-		/// 
+		///
 		/// add a Ridid Body to the model
-		/// 
+		///
 		/// @param[in] name : name of the body
 		/// @param[in] mass : mass of the body
 		/// @param[in] inertia : inertia of the body
@@ -337,17 +344,17 @@ namespace OMD
 		///
 		/// @return pointer to the body added to the model
 		///
-		BodyRigid* addBodyRigid(std::string const &name, 
-									double const &mass, 
-									Mat3x3 const &inertia, 
-									Vect3 const &pos=Vect3(0,0,0), 
-									Quat const &q=Quat(1,0,0,0), 
-									Vect3 const &vel=Vect3(0,0,0), 
-									Vect3 const &wl=Vect3(0,0,0), 
+		BodyRigid* addBodyRigid(std::string const &name,
+									double const &mass,
+									Mat3x3 const &inertia,
+									Vect3 const &pos=Vect3(0,0,0),
+									Quat const &q=Quat(1,0,0,0),
+									Vect3 const &vel=Vect3(0,0,0),
+									Vect3 const &wl=Vect3(0,0,0),
 									bool const &fixed=false);
-		/// 
+		///
 		/// add a Ridid Body to the model using no eigen, for use in swig
-		/// 
+		///
 		/// @param[in] name : name of the body
 		/// @param[in] mass : mass of the body
 		/// @param[in] inertia : inertia of the body
@@ -419,7 +426,7 @@ namespace OMD
 //#ifdef USE_BULLET
 //		ForceContact * addForceContact ( string const& name, btCollisionObjectArray objects, double stiff, double damp, double frict, double thresh  );
 //		ForceContact * addForceContact ( string const& name, btCollisionWorld *collisionWorld, double stiff, double damp, double frict, double thresh);
-//		ForceContact * addForceContact ( string const& name, double stiff, double damp, double frict, double thresh);
+		ForceContact * addForceContact ( string const& name, double stiff, double damp, double frict, double thresh);
 //#endif
 //#ifdef USE_OGRE	// don't include in SWIG
 //		ForceCollisionDynWorld * addForceCollisionDynWorld ( string const& name, double stiff, double damp, double frict, double thresh );

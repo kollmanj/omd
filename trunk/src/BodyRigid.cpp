@@ -172,6 +172,7 @@ namespace OMD
         m_inertia(0,0)=row0.x(); m_inertia(0,1)=row0.y(); m_inertia(0,2)=row0.z();
         m_inertia(1,0)=row1.x(); m_inertia(1,1)=row1.y(); m_inertia(1,2)=row1.z();
         m_inertia(2,0)=row2.x(); m_inertia(2,1)=row2.y(); m_inertia(2,2)=row2.z();
+        cout << m_inertia << std::endl;
     }
 
     double BodyRigid::getMassInertiaElement(int i, int j)

@@ -58,12 +58,14 @@ namespace OMD
 			///
 			void addBox(double x, double y, double z, Vect3 offset = Vect3(0,0,0), Mat3x3 rot = Mat3x3::Identity(),BodyRigid *body=0);
 			void addBox(double x, double y, double z, std::vector<double> offset, std::vector<double> rot, BodyRigid *body=0);
+			void addBox(double x, double y, double z, Vect3 offset = Vect3(0,0,0), Quat rot = Quat(1,0,0,0),BodyRigid *body=0);
 			void addCapsule(double radius, double height, Vect3 offset = Vect3(0,0,0), Mat3x3 rot = Mat3x3::Identity(),BodyRigid *body=0);
 			void addCapsule(double radius, double height, std::vector<double> offset, std::vector<double> rot, BodyRigid *body=0);
 			void addSphere(double radius, Vect3 offset = Vect3(0,0,0), Mat3x3 rot = Mat3x3::Identity(),BodyRigid *body=0);
 			void addSphere(double radius, std::vector<double> offset, std::vector<double> rot, BodyRigid *body=0);
 			void addCylinder(double radius, double width, Vect3 offset= Vect3(0,0,0), Mat3x3 rot= Mat3x3::Identity(), BodyRigid * body=0);
 			void addCylinder(double radius, double width, std::vector<double> offset, std::vector<double> rot, BodyRigid *body=0);
+			void addCylinder(double radius, double width, Vect3 const & offset, Vect3 const & axis, Vect3 const & fwd, BodyRigid * body);
 			void addTire(BodyRigid *body);
 			void addTire(double radius, double width, Vect3 offset, Mat3x3 rot, BodyRigid * body, OMD::Curve2DLinInterp slipCurve);
 			std::vector<double> getContactForces(Body *b){return m_c[b];};
@@ -78,10 +80,10 @@ namespace OMD
 			void setCollisionMargin(double cm){collisionMargin=cm;};
 			void setCollisionWorldScale(double s){collisionWorldScale=s;};
 			//double getCollisionMargin(Body *b);
+			void addShape(btCollisionShape* shape, Vect3 offset = Vect3(0,0,0), Quat const &qt= Quat(1,0,0,0), BodyRigid * body=0);
 
 
 		private:
-			void addShape(btCollisionShape* shape, Vect3 offset = Vect3(0,0,0), Quat const &qt= Quat(1,0,0,0), Body * body=0);
 //            void calcNormalForceAndTorque(Body *b, Vect3 ptLocal, double dist, Vect3 normG, Vect3 &f, Vect3 &t);
 //            void calcFrictionForceAndTorque(Body *b, Vect3 ptLocal,Vect3 ptRelativeVelGlobal, Vect3 normalF, Vect3 &f, Vect3 &t);
 			btAxisSweep3 *mBroadphase;

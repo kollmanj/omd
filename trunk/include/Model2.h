@@ -15,7 +15,7 @@
 #include "ForceRevJntSpringDamp.h"
 
 //#ifdef USE_BULLET
-//#include "ForceContact.h"
+#include "ForceContact.h"
 //#endif:
 
 namespace OMD
@@ -208,6 +208,7 @@ namespace OMD
 		JointRevolute *getJointRevolute( string jointname );
 		Force *getForce(  string forcename );
 		Force1Body* getForce1Body( string forcename );
+		ForceRevJnt* getForceRevJnt( string forcename );
 
 		///
 		/// Build Tree
@@ -326,7 +327,7 @@ namespace OMD
 //#ifdef USE_BULLET
 //		ForceContact * addForceContact ( string const& name, btCollisionObjectArray objects, double stiff, double damp, double frict, double thresh  );
 //		ForceContact * addForceContact ( string const& name, btCollisionWorld *collisionWorld, double stiff, double damp, double frict, double thresh);
-//		ForceContact * addForceContact ( string const& name, double stiff, double damp, double frict, double thresh);
+		ForceContact * addForceContact ( string const& name, double stiff, double damp, double frict, double thresh);
 //#endif
 //#ifdef USE_OGRE	// don't include in SWIG
 //		ForceCollisionDynWorld * addForceCollisionDynWorld ( string const& name, double stiff, double damp, double frict, double thresh );

@@ -99,6 +99,23 @@ namespace OMD
 		/// @return pointer to the body added to the model
 		///
 		BodyRigid* addBodyRigid(std::string const &name, double const &mass, std::vector<double> const &inertia, std::vector<double> const &pos, std::vector<double> q, std::vector<double> const &vel, std::vector<double> const &wl, bool const &fixed=false);
+		/*
+		///
+		/// add a Ridid Body to the model using no eigen, for use in swig
+		///
+		/// @param[in] name : name of the body
+		/// @param[in] mass : mass of the body
+		/// @param[in] inertia : inertia of the body
+		/// @param[in] pos:  position of the center of the mass of the body
+		/// @param[in] orient: orientaion of the body in the form of a std::vector row1,row2,row3
+		/// @param[in] vel: initial velocity of the body at the center of mass of the body
+		/// @param[in] wl: initial angular velocity of the body
+		/// @param[in] fixed:  true if the body is fixed to ground and does not move, otherwise false
+		///
+		/// @return pointer to the body added to the model
+		///
+		BodyRigid* addBodyRigid(std::string const &name, double const &mass, std::vector<double> const &inertia, std::vector<double> const &pos, std::vector<double> const &orient, std::vector<double> const &vel, std::vector<double> const &wl, bool const &fixed=false);
+		*/
 		///
 		/// add a Ridid Body to the model
 		///

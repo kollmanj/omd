@@ -32,7 +32,7 @@ namespace OMD
 	Model3::Model3():m_states(&m_rigidBodies)
 	{
 		m_time0 = 0;
-		m_epsilon=1e-8; /// TODO allow user to set this
+		m_epsilon=1e-8; /// TODO allow user to set this was
 		m_fixedRigidBodyCount = 0;
 	}
 	Model3::~Model3()
@@ -103,6 +103,21 @@ namespace OMD
 		m_states.calcIndependentStates(jacobian,jacobianM);
 	}
 
+	std::vector<int> Model3::getIndependentIndices()
+	{
+	    return m_states.getIndependentIndices();
+	}
+
+	std::vector<int> Model3::getDependentIndices()
+	{
+	    return m_states.getDependentIndices();
+	}
+
+	std::vector<int> Model3::getIndependentIndices2()
+	{
+	    return m_states.getIndependentIndices2();
+	}
+
 	std::vector<double> Model3::getDot( )
 	{
 		MatNxN allAccels = getAllAccels();
@@ -110,8 +125,20 @@ namespace OMD
 		return independentDots;
 	}
 
+	void Model3::kinematicSolve(std::vector<double> indStates)
+	{
+	    // this function sets the independent states solves for dependent and updates body info.
+	    setState(indStates);
+	}
+
 	void Model3::setState(std::vector<double> state_vector )
 	{
+	//double inda[] = {6,0,0,0};
+	//  std::vector<double> ind (inda, inda + sizeof(inda) / sizeof(double) );
+
+  //for (std::vector<double>::const_iterator i = state_vector.begin(); i != state_vector.end(); ++i)
+   // std::cout << *i << ' ';
+
 		/// part c from page 321 Nikravesh
 		/// solve for dependents by Newton Raphson
 		double deltat = m_time1 - m_time0;
@@ -123,9 +150,9 @@ namespace OMD
 		while ( !done )
 		{
 			MatNxN jacobian = getJacobian();
-			//			std::cout << "jacobian: " << jacobian << std::endl;
+			std::cout << "jacobian: " << jacobian << std::endl;
 			MatNxN pos_error = getConstraintViolation();
-			//std::cout << "pos_error : " << pos_error << std::endl;
+			std::cout << "pos_error : " << pos_error << std::endl;
 
 			done = true;	// this will be set back to false if error is > m_epsilon
 			for (int i=0; i<pos_error.rows(); ++i)
@@ -357,7 +384,7 @@ namespace OMD
 				{
 					if ( (*it2 != parent)  && (*it2 != child))
 					{
-						jac4Jnt = concatH(jac4Jnt, z);		
+						jac4Jnt = concatH(jac4Jnt, z);
 					}
 					else if (*it2 == parent)
 					{
@@ -369,7 +396,7 @@ namespace OMD
 					}
 				}
 			}
-			// 
+			//
 			jacobian = concatV(jacobian, jac4Jnt);
 		}
 
@@ -448,7 +475,7 @@ namespace OMD
 			MatNxN temp = jacobianM;
 			jacobianM = concatV(temp,jac4Jnt);
 		}
-		
+
 		return jacobianM;
 	}
 
@@ -511,7 +538,7 @@ namespace OMD
 		return out;
 	}
 
-	
+
 	void Model3::stepC3()
 	{
 		//      makeJacobian(t);
@@ -650,7 +677,7 @@ namespace OMD
 		// TODO: if BodyRigid does not exist fail gracefully
 		BodyRigid *parent = getBody(parentname);
 		BodyRigid *child = getBody(childname);
-		
+
 		// determine joint2child based on where stuff is
 		// location of joint in global
 		Vect3 parent2joint_(parent2joint[0],parent2joint[1],parent2joint[2]);
@@ -700,7 +727,7 @@ namespace OMD
 
 		Mat3x3 Ai = parent->getRot();
 		Mat3x3 Aj = child->getRot();
-		
+
 		Vect3 parent2joint_(parent2joint[0],parent2joint[1],parent2joint[2]);
 		Vect3 jntLocationGlobal = Ai*parent2joint_ + parent->m_pos;
 
@@ -727,7 +754,7 @@ namespace OMD
 
 		Mat3x3 Ai = parent->getRot();
 		Mat3x3 Aj = child->getRot();
-		
+
 		Vect3 parent2joint_(parent2joint[0],parent2joint[1],parent2joint[2]);
 		Vect3 jntLocationGlobal = Ai*parent2joint_ + parent->m_pos;
 
@@ -772,7 +799,7 @@ namespace OMD
 		Vect3 jntLocationGlobal = Ai*parent2joint_ + parent->m_pos;
 
 		Vect3 joint2child = Aj.transpose()*(child->m_pos-jntLocationGlobal);
-		
+
 		Vect3 axis_(axis[0],axis[1],axis[2]);
 		JointCylindrical *j = new JointCylindrical( name, parent, parent2joint_, child, joint2child, axis_, q0, u0);
 		m_joint.push_back(j);
@@ -861,7 +888,7 @@ namespace OMD
                                             vector<double> pAxis,
                                             string const& childname,
                                             vector<double> cAxis)
-	{	
+	{
 		BodyRigid *parent = getBody(parentname);
 		BodyRigid *child = getBody(childname);
 		// determine joint2child based on where stuff is
@@ -880,13 +907,13 @@ namespace OMD
 		return j;
 	}
 
-	BodyRigid* Model3::addBodyRigid(std::string const &name, 
-									double const &mass, 
-									Mat3x3 const &inertia, 
-									Vect3 const &pos, 
-									Quat const &q, 
-									Vect3 const &vel, 
-									Vect3 const &wl, 
+	BodyRigid* Model3::addBodyRigid(std::string const &name,
+									double const &mass,
+									Mat3x3 const &inertia,
+									Vect3 const &pos,
+									Quat const &q,
+									Vect3 const &vel,
+									Vect3 const &wl,
 									bool const &fixed)
 	{
 		BodyRigid *b = new BodyRigid(name,mass,inertia,pos,q,vel,wl,fixed);
@@ -962,10 +989,10 @@ namespace OMD
 	}
 
 	BodyRigid* Model3::addBodyRigid(std::string const &name, double const &mass, std::vector<double> const &inertia,
-							std::vector<double> const &pos, std::vector<double> q, std::vector<double> const &vel, 
+							std::vector<double> const &pos, std::vector<double> q, std::vector<double> const &vel,
 							std::vector<double> const &wl, bool const &fixed)
 	{
-		Mat3x3 i; 
+		Mat3x3 i;
 		i		<<	inertia[0], inertia[1], inertia[2],
 					inertia[3],	inertia[4],	inertia[5],
 					inertia[6],	inertia[7], inertia[8];
@@ -1087,19 +1114,19 @@ namespace OMD
 //			return NULL;
 //	}
 //
-//	ForceContact * Model3::addForceContact ( string const& name, double stiff, double damp, double frict, double thresh)
-//	{
-//		bool nameAlreadyUsed = searchForcesForName(name);
-//		if (!nameAlreadyUsed)
-//		//if (m_forces.find(name) == m_forces.end())
-//		{
-//			ForceContact *f = new ForceContact ( name, stiff, damp, frict, thresh );
-//			//m_forces[f->getName()] = f;
-//			m_forces.push_back(f);
-//			return f;
-//		}
-//		else
-//			return NULL;
-//	}
+	ForceContact * Model3::addForceContact ( string const& name, double stiff, double damp, double frict, double thresh)
+	{
+		bool nameAlreadyUsed = searchForcesForName(name);
+		if (!nameAlreadyUsed)
+		//if (m_forces.find(name) == m_forces.end())
+		{
+			ForceContact *f = new ForceContact ( name, stiff, damp, frict, thresh );
+			//m_forces[f->getName()] = f;
+			m_forces.push_back(f);
+			return f;
+		}
+		else
+			return NULL;
+	}
 //#endif
 }

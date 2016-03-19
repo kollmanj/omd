@@ -10,6 +10,48 @@ using namespace OMD;
 
 void ball1()
 {
+
+double g = 9.81;
+double ballmass = 1;
+Vect3 v0(1,0,0);
+Vect3 v1(0,1,0);
+Vect3 v2(0,0,1);
+Quat q(1,0,0,0);
+Vect3 zerovect(0,0,0);
+Mat3x3 mymat3;
+//var bod = new Ammo.BodyRigid("bod1",1,mymat3);
+//var m00 = bod.getMassInertiaElement(0,1);
+OMD::Model1 model1;
+//model1.addBodyRigid(bod);
+//BodyRigid * grnd = model1.addBodyRigid("grnd",1.1,mymat3,zerovect,q,zerovect,zerovect,true);
+BodyRigid * bod1 = model1.addBodyRigid("bod1",1.1,mymat3,zerovect,q,zerovect,zerovect,false);
+bod1->setMassInertia(v0,v1,v2);
+Vect3 frc(0,0,-g*ballmass);
+
+Force1Body* ballgrav = model1.addForce1Body("ballgrav",bod1,frc,zerovect,false);
+
+
+	double time = 0.0;
+	double dt = 0.0005;
+	double endtime = 4;
+
+	while (time < endtime)
+	{
+		Vect3 pos = bod1->getPosition(zerovect);
+                double x = pos.x();
+                double y = pos.y();
+                double z = pos.z();
+
+		std::cout<< time << " , " << pos.x() << " , "<< pos.y() << " , "<< pos.z() << std::endl;
+
+		model1.integrate(time,time+dt);
+		time = time + dt;
+	}
+
+
+
+
+/*
 	double g = 9.81;
 	double ballmass = 2;
 	Model1 mymodel;
@@ -42,12 +84,13 @@ void ball1()
 	while (time < endtime)
 	{
 		Vect3 pos = ball->getPosition(Vect3(0,0,0));
-		//std::cout<< time << " , " << pos.x() << " , "<< pos.y() << " , "<< pos.z() << std::endl;
+		std::cout<< time << " , " << pos.x() << " , "<< pos.y() << " , "<< pos.z() << std::endl;
 
 		mymodel.integrate(time,time+dt);
 		time = time + dt;
 	}
 	int crap = 1;
+	*/
 }
 
 

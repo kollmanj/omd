@@ -230,6 +230,8 @@ namespace OMD
 	    //std::vector<int> pivots;
 		////
 		Eigen::FullPivLU<Matrix<double,Dynamic,Dynamic> > flu(jacobian);
+		//cout << endl;
+		//cout << jacobian << std::endl;
 		//Eigen::ColPivHouseholderQR<Matrix<double,11,14>> ldlt_(jacobian);
 		Eigen::Matrix<int,Dynamic,Dynamic> pivots_mat =  flu.permutationQ().indices() ;
 		//std::cout << ldlt_.colsPermutation().indices() << std::endl;

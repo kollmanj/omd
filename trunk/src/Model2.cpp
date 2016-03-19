@@ -388,17 +388,20 @@ namespace OMD
 //			return NULL;
 //	}
 //
-//	ForceContact * Model2::addForceContact ( string const& name, double stiff, double damp, double frict, double thresh)
-//	{
-//		if (m_forces.find(name) == m_forces.end())
-//		{
-//			ForceContact *f = new ForceContact ( name, stiff, damp, frict, thresh );
-//			m_forces[f->getName()] = f;
-//			return f;
-//		}
-//		else
-//			return NULL;
-//	}
+	ForceContact * Model2::addForceContact ( string const& name, double stiff, double damp, double frict, double thresh)
+	{
+        bool nameAlreadyUsed = searchForcesForName(name);
+		if (!nameAlreadyUsed)
+		//if (m_forces.find(name) == m_forces.end())
+		{
+			ForceContact *f = new ForceContact ( name, stiff, damp, frict, thresh );
+			//m_forces[f->getName()] = f;
+			m_forces.push_back(f);
+			return f;
+		}
+		else
+			return NULL;
+	}
 //#endif
 	/// TODO put this back in
 	//Curve2DSineWave * Model2::addCurve2DSineWave(string const& name, double amp, double offset, double freq, double shift)
@@ -656,6 +659,12 @@ namespace OMD
     Force1Body* Model2::getForce1Body( string forcename )
     {
         Force1Body * frc = dynamic_cast<Force1Body*> (getForce(forcename));
+        return frc;
+    }
+
+    ForceRevJnt* Model2::getForceRevJnt( string forcename )
+    {
+        ForceRevJnt * frc = dynamic_cast<ForceRevJnt*> (getForce(forcename));
         return frc;
     }
 

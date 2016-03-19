@@ -132,7 +132,7 @@ namespace OMD
 		//int numCollisionObjects = m_btCollisionWorld->getNumCollisionObjects();
 		m_btCollisionWorld->performDiscreteCollisionDetection();
 		int numManifolds = m_btCollisionWorld->getDispatcher()->getNumManifolds();
-		
+
 		//std::cout << "numManifolds: " << numManifolds << std::endl;
 
 		for (int i=0;i<numManifolds;i++)
@@ -299,6 +299,13 @@ namespace OMD
 		return;
 	}
 
+    void ForceContact::addBox(double x, double y, double z, Vect3 offset, Quat rot, BodyRigid *body)
+    {
+        Mat3x3 rot_ = rot.matrix();
+        //cout << rot_ << endl;
+        addBox(x, y, z, offset, rot_, body);
+    }
+
 	void ForceContact::addBox(double x, double y, double z, vector<double> offset, vector<double> rot, BodyRigid *body)
 	{
 		Vect3 offset_(offset[0],offset[1],offset[2]);
@@ -313,7 +320,7 @@ namespace OMD
 	{
 		return addCapsule(radius,0.0,offset,rot,body);
 	}
-	
+
 	void ForceContact::addSphere(double radius, Vect3 offset, Mat3x3 rot, BodyRigid * body)
 	{
 		return addCapsule(radius,0.0,offset,rot,body);
@@ -374,6 +381,31 @@ namespace OMD
 				rot[6],	rot[7],	rot[8];
 		return addCylinder(radius,width,offset_,rot_, body);
 	}
+
+    void ForceContact::addCylinder(double radius, double width, Vect3 const &offset, Vect3 const &axis, Vect3 const &fwd, BodyRigid * body)
+    {
+
+        Vect3 cylinderz = fwd.cross(axis);
+
+        Mat3x3 rot;
+//        rot << fwd(0), fwd(1), fwd(2),
+//               middle(0), middle(1), middle(2),
+//               axis(0), axis(1), axis(2);
+
+        rot(0,0)=fwd.x(); rot(0,1)=axis.x(); rot(0,2)=cylinderz.x();
+        rot(1,0)=fwd.y(); rot(1,1)=axis.y(); rot(1,2)=cylinderz.y();
+        rot(2,0)=fwd.z(); rot(2,1)=axis.z(); rot(2,2)=cylinderz.z();
+
+//        rot        <<  1,0,0,
+//                       0,0,-1,
+//                       0,1,0;
+
+        cout << rot << endl;
+
+        addCylinder(radius, width, offset, rot, body);
+
+		return;
+    }
 
 	void ForceContact::addCylinder(double radius, double width, Vect3 offset, Mat3x3 rot, BodyRigid * body)
 	{
@@ -477,7 +509,7 @@ namespace OMD
 		//mTireBodies.push_back(body);
 	}
 
-	void ForceContact::addShape(btCollisionShape* shape, Vect3 offset, Quat const & qt, Body * body)
+	void ForceContact::addShape(btCollisionShape* shape, Vect3 offset, Quat const & qt, BodyRigid * body)
 	{
 		// check to see if we already have a btCompoundShape to which we can add the shape
 		btCollisionObjectArray &objectArray = m_btCollisionWorld->getCollisionObjectArray();
@@ -513,7 +545,7 @@ namespace OMD
 		cShape->addChildShape(shapeTrans,shape);
 		cShape->setMargin(0.001);
 		//btDefaultMotionState* MotionState = new btDefaultMotionState();  ////////////////////////////////////////////////////////
-		
+
 		btCollisionObject *collisionObject = new btCollisionObject();
 		collisionObject->setCollisionShape(cShape);
 		//btRigidBody *btBody(0);
@@ -528,7 +560,7 @@ namespace OMD
 			// Not associated with a body set it's pointer to 0
 			//btBody = new btRigidBody(0,MotionState,cShape,btVector3(0,0,0));
 			collisionObject->setUserPointer(0);
-			// No rotation positioned at 0,0,0 
+			// No rotation positioned at 0,0,0
 			//btTransform collisionTransform(btQuaternion(0,0,0,1),btVector3(0,0,0));
 			//collisionObject->setWorldTransform(collisionTransform);
 			btTransform collisionTransform(btQuaternion(0,0,0,1),btVector3(0,0,0));

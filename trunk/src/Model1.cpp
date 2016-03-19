@@ -84,7 +84,17 @@ namespace OMD
 		}
 		return b;
 	}
-
+/*
+	BodyRigid* Model1::addBodyRigid(std::string const &name, double const &mass, std::vector<double> const &inertia, std::vector<double> const &pos, std::vector<double> const &orient, std::vector<double> const &vel, std::vector<double> const &wl, bool const &fixed=false);
+	{
+	    Mat3x3 orient_;
+	    orient_  << orient[0],	orient[1],	orient[2],
+					orient[3],	orient[4],	orient[5],
+					orient[6],	orient[7],	orient[8];
+		Quat q(orient_);
+	    addBodyRigid(name, mass, inertia, pos,  q, vel, wl, fixed);
+	}
+*/
 	BodyRigid* Model1::addBodyRigid(std::string const &name, double const &mass, Mat3x3 const &inertia, Vect3 const &pos, Quat const &q, Vect3 const &vel, Vect3 const &wl, bool const &fixed)
 	{
 		BodyRigid *b = new BodyRigid(name,mass,inertia,pos,q,vel,wl,fixed);

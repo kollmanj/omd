@@ -288,6 +288,8 @@ public Model1
         ForceRevJntPIDCurve2D * addForceRevJntPIDCurve2D(std::string const& name, JointRevolute * jnt, double p, double i, double d, Curve2DSine *curve);
         ForceRevJntSpringDamp * addForceRevJntSpringDamp(string const& name, JointRevolute *jnt, double k, double c, double fl=0);
         void calcIndependentStates();
+        std::vector<int> getIndependentIndices();
+        void kinematicSolve(std::vector<double> indStates);
         ~Model3(void);
 };
 
